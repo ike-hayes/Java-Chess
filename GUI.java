@@ -1,4 +1,3 @@
-
 /**
  * The UI which shows the game to the player
  *
@@ -14,14 +13,23 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.border.Border;
 public class GUI extends JFrame implements ActionListener, MouseListener{
+    Icon wPawn=new ImageIcon("Images\\wP.png");
+    Icon wRook=new ImageIcon("Images\\wR.png");
+    Icon wKnight=new ImageIcon("Images\\wN.png");
+    Icon wBishop=new ImageIcon("Images\\wB.png");
+    Icon wKing=new ImageIcon("Images\\wK.png");
+    Icon wQueen=new ImageIcon("Images\\wQ.png");
+    
+    Icon bPawn=new ImageIcon("Images\\bP.png");
+    Icon bRook=new ImageIcon("Images\\bR.png");
+    Icon bKnight=new ImageIcon("Images\\bN.png");
+    Icon bBishop=new ImageIcon("Images\\bB.png");
+    Icon bKing=new ImageIcon("Images\\bK.png");
+    Icon bQueen=new ImageIcon("Images\\bQ.png");
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setVisible(true);
-        
-        JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
 
         final BufferedImage boardImage=ImageIO.read(new File("Images\\board.png"));
 
@@ -34,9 +42,11 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
             }
         };
         boardPanel.setPreferredSize(new Dimension(800,800));
-        container.add(boardPanel);
         
-        Icon wPawn=new ImageIcon("Images\\wP.png");
+        JLayeredPane boardLayeredPane=new JLayeredPane();
+        boardLayeredPane.setPreferredSize(new Dimension(800,800));
+        boardLayeredPane.add(boardPanel,0);
+        
         JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
         statusLabel.setOpaque(true);
         statusLabel.setIconTextGap(5);
@@ -62,18 +72,40 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         moveListPanel.setBorder(blackBorder);
         
         JButton resignButton=new JButton("Resign?");
+        resignButton.setPreferredSize(new Dimension(150,100));
+        resignButton.setMaximumSize(new Dimension(150,100));
+        resignButton.setMinimumSize(new Dimension(150,100));
+        resignButton.setBackground(new Color(235,235,235));
+        resignButton.setBorder(blackBorder);
         resignButton.addActionListener(this);
         
         JPanel resignButtonPanel=new JPanel();
-        resignButtonPanel.setBackground(Color.ORANGE);
+        resignButtonPanel.setLayout(new BoxLayout(resignButtonPanel, BoxLayout.PAGE_AXIS));
+        resignButtonPanel.add(resignButton);
         resignButtonPanel.setPreferredSize(new Dimension(150,100));
         resignButtonPanel.setMaximumSize(new Dimension(150,100));
         resignButtonPanel.setMinimumSize(new Dimension(150,100));
+        
+        JButton drawButton=new JButton("Offer Draw?");
+        drawButton.setPreferredSize(new Dimension(150,100));
+        drawButton.setMaximumSize(new Dimension(150,100));
+        drawButton.setMinimumSize(new Dimension(150,100));
+        drawButton.setBackground(new Color(112,133,183));
+        drawButton.setBorder(blackBorder);
+        drawButton.addActionListener(this);
+        
+        JPanel drawButtonPanel=new JPanel();
+        drawButtonPanel.setLayout(new BoxLayout(drawButtonPanel, BoxLayout.PAGE_AXIS));
+        drawButtonPanel.add(drawButton);
+        drawButtonPanel.setPreferredSize(new Dimension(150,100));
+        drawButtonPanel.setMaximumSize(new Dimension(150,100));
+        drawButtonPanel.setMinimumSize(new Dimension(150,100));
         
         JPanel buttonPane=new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.add(resignButtonPanel);
         buttonPane.add(Box.createRigidArea(new Dimension(0,5)));
+        buttonPane.add(drawButtonPanel);
         
         JPanel UIPane=new JPanel();
         UIPane.setLayout(new BoxLayout(UIPane, BoxLayout.PAGE_AXIS));
@@ -83,12 +115,16 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         UIPane.add(Box.createRigidArea(new Dimension(0,5)));
         UIPane.add(buttonPane);
         UIPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-        container.add(UIPane);
         
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
+        container.add(boardPanel);
+        container.add(UIPane);
+         
         this.add(container);
         this.pack();
-        repaint();        
+        repaint();
+        this.setVisible(true);
     }
     public void actionPerformed(ActionEvent e){}
     public void mouseExited(MouseEvent e){}
