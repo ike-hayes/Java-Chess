@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Square
+comment0.text=\r\n\ The\ squares\ on\ the\ chess\ board\ that\ will\ hold\ pieces\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 10/5/22\r\n
+comment1.params=x\ y\ piece
+comment1.target=Square(int,\ int,\ Piece)
+comment2.params=
+comment2.target=int\ getX()
+comment3.params=x
+comment3.target=void\ setX(int)
+comment4.params=
+comment4.target=int\ getY()
+comment5.params=y
+comment5.target=void\ setY(int)
+comment6.params=
+comment6.target=Piece\ getCurrentPiece()
+comment7.params=piece
+comment7.target=void\ setCurrentPiece(Piece)
+numComments=8

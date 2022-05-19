@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Piece
+comment0.text=\r\n\ The\ abstract\ classes\ that\ all\ pieces\ are\ based\ on\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 10/5/22\r\n
+comment1.params=colour
+comment1.target=Piece(boolean)
+comment2.params=start\ end
+comment2.target=boolean\ movePossible(Square,\ Square)
+comment3.params=
+comment3.target=boolean\ getColour()
+comment4.params=
+comment4.target=boolean\ getCaptured()
+comment5.params=captured
+comment5.target=void\ setCaptured(boolean)
+numComments=6
