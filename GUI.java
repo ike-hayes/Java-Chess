@@ -43,9 +43,13 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         };
         boardPanel.setPreferredSize(new Dimension(800,800));
         
+        JPanel piecePane=new JPanel();
+        piecePane.setPreferredSize(new Dimension(800,800));
+        
         JLayeredPane boardLayeredPane=new JLayeredPane();
         boardLayeredPane.setPreferredSize(new Dimension(800,800));
         boardLayeredPane.add(boardPanel,0);
+        boardLayeredPane.add(piecePane,1);
         
         JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
         statusLabel.setOpaque(true);

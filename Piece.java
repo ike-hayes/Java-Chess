@@ -1,12 +1,13 @@
 /**
- * The abstract classes that all pieces are based on
+ * The abstract class that all pieces are based on
  *
  * @author Ike Hayes
- * @version 10/5/22
+ * @version 24/5/22
  */
 public abstract class Piece{
     private boolean captured=false;
     private boolean white;
+    private boolean hasMoved=false;
     public Piece(boolean colour){
         this.white=colour;
     }
@@ -25,4 +26,11 @@ public abstract class Piece{
         this.captured=captured;
     }
     
+    public boolean getMoved(){
+        return this.hasMoved;
+    }
+    
+    public void setMoved(boolean moved){
+        this.hasMoved=moved;
+    }
 }

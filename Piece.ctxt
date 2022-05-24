@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Piece
-comment0.text=\r\n\ The\ abstract\ classes\ that\ all\ pieces\ are\ based\ on\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 10/5/22\r\n
+comment0.text=\r\n\ The\ abstract\ class\ that\ all\ pieces\ are\ based\ on\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 24/5/22\r\n
 comment1.params=colour
 comment1.target=Piece(boolean)
 comment2.params=start\ end
@@ -11,4 +11,8 @@ comment4.params=
 comment4.target=boolean\ getCaptured()
 comment5.params=captured
 comment5.target=void\ setCaptured(boolean)
-numComments=6
+comment6.params=
+comment6.target=boolean\ getMoved()
+comment7.params=moved
+comment7.target=void\ setMoved(boolean)
+numComments=8
