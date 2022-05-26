@@ -41,16 +41,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
                 g.drawImage(boardImage,0,0,null);
             }
         };
-        boardPanel.setPreferredSize(new Dimension(800,800));
+        boardPanel.setBounds(0,0,800,800);
         
         JPanel piecePane=new JPanel();
+        piecePane.setLayout(null);
+        piecePane.setOpaque(false);
+        piecePane.setBounds(0,0,800,800);
         piecePane.setPreferredSize(new Dimension(800,800));
+        piecePane.add(new PiecePanel(wPawn,100,100));
+        piecePane.add(new PiecePanel(wPawn,500,400));
+        
         
         JLayeredPane boardLayeredPane=new JLayeredPane();
-        boardLayeredPane.setPreferredSize(new Dimension(800,800));
-        boardLayeredPane.add(boardPanel,0);
-        boardLayeredPane.add(piecePane,1);
-        
+        boardLayeredPane.setBounds(0,0,800,800);
+        boardLayeredPane.add(boardPanel,0,0);
+        boardLayeredPane.add(piecePane,1,0);
+
         JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
         statusLabel.setOpaque(true);
         statusLabel.setIconTextGap(5);
@@ -122,7 +128,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
-        container.add(boardPanel);
+        container.add(boardLayeredPane);
         container.add(UIPane);
          
         this.add(container);
