@@ -26,6 +26,8 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     Icon bBishop=new ImageIcon("Images\\bB.png");
     Icon bKing=new ImageIcon("Images\\bK.png");
     Icon bQueen=new ImageIcon("Images\\bQ.png");
+    
+    JPanel piecePanel=new JPanel();
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));
@@ -43,26 +45,22 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         };
         boardPanel.setBounds(0,0,800,800);
         
-        JPanel piecePane=new JPanel();
-        piecePane.setLayout(null);
-        piecePane.setOpaque(false);
-        piecePane.setBounds(0,0,800,800);
-        piecePane.setPreferredSize(new Dimension(800,800));
-        piecePane.add(new PiecePanel(wPawn,100,100));
-        piecePane.add(new PiecePanel(wPawn,500,400));
-        
+        piecePanel.setLayout(new GridLayout(8,8));
+        piecePanel.setOpaque(false);
+        piecePanel.setBounds(0,0,800,800);
+        standardGameSetup();
         
         JLayeredPane boardLayeredPane=new JLayeredPane();
-        boardLayeredPane.setBounds(0,0,800,800);
+        boardLayeredPane.setPreferredSize(new Dimension(800,800));
         boardLayeredPane.add(boardPanel,0,0);
-        boardLayeredPane.add(piecePane,1,0);
+        boardLayeredPane.add(piecePanel,1,0);
 
         JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
         statusLabel.setOpaque(true);
         statusLabel.setIconTextGap(5);
         statusLabel.setBackground(Color.WHITE);
         
-        JPanel statusLabelPanel = new JPanel();
+        JPanel statusLabelPanel=new JPanel();
         statusLabelPanel.setPreferredSize(new Dimension(300,80));
         statusLabelPanel.setMaximumSize(new Dimension(300,80));
         statusLabelPanel.setMinimumSize(new Dimension(300,80));
@@ -126,7 +124,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         UIPane.add(buttonPane);
         UIPane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
-        JPanel container = new JPanel();
+        JPanel container=new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
         container.add(boardLayeredPane);
         container.add(UIPane);
@@ -135,6 +133,33 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         this.pack();
         repaint();
         this.setVisible(true);
+    }
+    private void standardGameSetup(){
+        piecePanel.add(new PiecePicture(bRook));
+        piecePanel.add(new PiecePicture(bKnight));
+        piecePanel.add(new PiecePicture(bBishop));
+        piecePanel.add(new PiecePicture(bQueen));
+        piecePanel.add(new PiecePicture(bKing));
+        piecePanel.add(new PiecePicture(bBishop));
+        piecePanel.add(new PiecePicture(bKnight));
+        piecePanel.add(new PiecePicture(bRook));
+        for(int i=0;i<8;i++){
+            piecePanel.add(new PiecePicture(bPawn));
+        }
+        for(int i=0;i<32;i++){
+            piecePanel.add(new PiecePicture(null));
+        }
+        for(int i=0;i<8;i++){
+            piecePanel.add(new PiecePicture(wPawn));
+        }
+        piecePanel.add(new PiecePicture(wRook));
+        piecePanel.add(new PiecePicture(wKnight));
+        piecePanel.add(new PiecePicture(wBishop));
+        piecePanel.add(new PiecePicture(wQueen));
+        piecePanel.add(new PiecePicture(wKing));
+        piecePanel.add(new PiecePicture(wBishop));
+        piecePanel.add(new PiecePicture(wKnight));
+        piecePanel.add(new PiecePicture(wRook));
     }
     public void actionPerformed(ActionEvent e){}
     public void mouseExited(MouseEvent e){}

@@ -12,17 +12,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.border.Border;
-public class PiecePanel extends JPanel implements ActionListener{
+public class PiecePicture extends JPanel implements ActionListener{
     final int buttonWidth=100;
     final int buttonHeight=100;
-    /**
-     * Constructor for objects of class PieceButton
-     */
-    public PiecePanel(Icon icon,int x,int y){
-        this.setBounds(x,y,buttonWidth,buttonHeight);
+    public PiecePicture(Icon icon){
+        this.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
         this.setBackground(new Color(0,0,0,0));
         JButton pieceButton=new JButton(icon);
-        pieceButton.setBounds(x,y,buttonWidth,buttonHeight);
+        pieceButton.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
         pieceButton.setOpaque(false);
         pieceButton.setContentAreaFilled(false);
         pieceButton.setBorderPainted(false);

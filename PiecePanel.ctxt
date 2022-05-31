@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=PiecePanel
-comment1.params=icon\ x\ y
-comment1.target=PiecePanel(javax.swing.Icon,\ int,\ int)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ PieceButton\r\n
-comment2.params=e
-comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
-numComments=3

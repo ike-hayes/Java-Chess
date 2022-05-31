@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=PiecePicture
+comment1.params=icon
+comment1.target=PiecePicture(javax.swing.Icon)
+comment2.params=e
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=3
