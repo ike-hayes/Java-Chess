@@ -27,7 +27,7 @@ public class Square{
     
     private void createButton(){
         buttonPanel.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
-        buttonPanel.setBackground(new Color(0,0,0,0));
+        buttonPanel.setOpaque(false);
         pieceButton.setPreferredSize(new Dimension(buttonWidth,buttonHeight));
         pieceButton.setOpaque(false);
         pieceButton.setContentAreaFilled(false);
