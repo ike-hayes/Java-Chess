@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Queen
+comment1.params=colour
+comment1.target=Queen(boolean)
+comment2.params=start\ end
+comment2.target=boolean\ movePossible(Square,\ Square)
+numComments=3

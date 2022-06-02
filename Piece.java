@@ -4,10 +4,14 @@
  * @author Ike Hayes
  * @version 24/5/22
  */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 public abstract class Piece{
     private boolean captured=false;
     private boolean white;
     private boolean hasMoved=false;
+    private Icon icon;
     public Piece(boolean colour){
         this.white=colour;
     }
@@ -32,5 +36,13 @@ public abstract class Piece{
     
     public void setMoved(boolean moved){
         this.hasMoved=moved;
+    }
+    
+    public Icon getIcon(){
+        return this.icon;
+    }
+    
+    public void setIcon(Icon icon){
+        this.icon=icon;
     }
 }
