@@ -13,9 +13,9 @@ public class Rook extends Piece{
     public Rook(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wRook);
+           this.setPieceIcon(wRook);
        }else{ 
-           this.setIcon(bRook);
+           this.setPieceIcon(bRook);
        }
     }
     public boolean movePossible(Square start, Square end){

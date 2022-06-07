@@ -21,6 +21,7 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
     
     Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
+    
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));

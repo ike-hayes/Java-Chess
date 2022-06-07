@@ -13,9 +13,9 @@ public class Knight extends Piece{
     public Knight(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wKnight);
+           this.setPieceIcon(wKnight);
        }else{ 
-           this.setIcon(bKnight);
+           this.setPieceIcon(bKnight);
        }
     }
     public boolean movePossible(Square start, Square end){

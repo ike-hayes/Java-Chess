@@ -13,9 +13,9 @@ public class Pawn extends Piece{
     public Pawn(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wPawn);
+           this.setPieceIcon(wPawn);
        }else{ 
-           this.setIcon(bPawn);
+           this.setPieceIcon(bPawn);
        }
     }
     public boolean movePossible(Square start, Square end){

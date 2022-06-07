@@ -13,9 +13,9 @@ public class King extends Piece{
     public King(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wKing);
+           this.setPieceIcon(wKing);
        }else{ 
-           this.setIcon(bKing);
+           this.setPieceIcon(bKing);
        }
     }
     public boolean movePossible(Square start, Square end){

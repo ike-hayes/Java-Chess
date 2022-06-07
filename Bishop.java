@@ -13,9 +13,9 @@ public class Bishop extends Piece{
     public Bishop(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wBishop);
+           this.setPieceIcon(wBishop);
        }else{ 
-           this.setIcon(bBishop);
+           this.setPieceIcon(bBishop);
        }
     }
     public boolean movePossible(Square start, Square end){

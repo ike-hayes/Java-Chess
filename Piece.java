@@ -38,11 +38,11 @@ public abstract class Piece{
         this.hasMoved=moved;
     }
     
-    public Icon getIcon(){
+    public Icon getPieceIcon(){
         return this.icon;
     }
     
-    public void setIcon(Icon icon){
+    public void setPieceIcon(Icon icon){
         this.icon=icon;
     }
 }

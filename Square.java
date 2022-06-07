@@ -7,7 +7,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class Square{
+public class Square implements ActionListener{
     private Piece currentPiece;
     private int x;
     private int y;
@@ -16,13 +16,23 @@ public class Square{
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
-    public Square(int x, int y, Piece piece)
-    {
+    public Square(int x, int y, Piece piece){
         this.currentPiece=piece;
         this.x=x;
         this.y=y;
         createButton();
-        if(currentPiece!=null)pieceButton.setIcon(this.currentPiece.getIcon());
+        if(this.currentPiece!=null){
+            pieceButton.setIcon(this.currentPiece.getPieceIcon());
+        }
+    }
+    
+    public void actionPerformed(ActionEvent e){
+        if((Game.selectedPiece==null && this.currentPiece!=null) || (Game.selectedPiece.getColour()==this.currentPiece.getColour())){
+            Game.selectedPiece=this.currentPiece;
+        }else if(Game.selectedPiece!=null){
+            this.currentPiece=Game.selectedPiece;
+            pieceButton.setIcon(this.currentPiece.getPieceIcon());
+        }
     }
     
     private void createButton(){
@@ -32,10 +42,11 @@ public class Square{
         pieceButton.setOpaque(false);
         pieceButton.setContentAreaFilled(false);
         pieceButton.setBorderPainted(false);
+        pieceButton.addActionListener(this);
         buttonPanel.add(pieceButton);
     }
 
-     public int getX(){
+    public int getX(){
         return this.x;
     }
   

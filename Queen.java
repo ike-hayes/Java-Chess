@@ -13,9 +13,9 @@ public class Queen extends Piece{
     public Queen(boolean colour){
        super(colour);
        if(this.getColour()){
-           this.setIcon(wQueen);
+           this.setPieceIcon(wQueen);
        }else{ 
-           this.setIcon(bQueen);
+           this.setPieceIcon(bQueen);
        }
     }
     public boolean movePossible(Square start, Square end){
