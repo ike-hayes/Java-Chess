@@ -12,11 +12,18 @@ public abstract class Piece{
     private boolean white;
     private boolean hasMoved=false;
     private Icon icon;
+    /* This abstract piece class is what each piece extends. It holds info that 
+     * all pieces require such as the colour, icon, if it is captured, whether it has moved
+     * etc.
+     */
     public Piece(boolean colour){
         this.white=colour;
     }
     
     public abstract boolean movePossible(Square start, Square end);
+    /*An abstract method needs to be overriden by each class separately. This is because
+     * all the pieces move differently.
+     */
     
     public boolean getColour(){
         return this.white;

@@ -13,13 +13,13 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.border.Border;
 //Imports all libraries required
-public class GUI extends JFrame implements ActionListener, MouseListener{
+public class GUI extends JFrame implements ActionListener{
     Icon wPawn=new ImageIcon("Images\\wP.png");
     Icon bPawn=new ImageIcon("Images\\bP.png");
     //These two icons are used to indicate whose turn it is
     JPanel piecePanel=new JPanel();
     
-    Square[][] squares=new Square[8][8];
+    static Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
     
     public GUI() throws IOException{
@@ -189,9 +189,4 @@ public class GUI extends JFrame implements ActionListener, MouseListener{
         //All these squares contain JPanels showing the pieces, which are then added to the board
     }
     public void actionPerformed(ActionEvent e){}
-    public void mouseExited(MouseEvent e){}
-    public void mouseEntered(MouseEvent e){}
-    public void mouseReleased(MouseEvent e){}
-    public void mousePressed(MouseEvent e){}
-    public void mouseClicked(MouseEvent e){}
 }

@@ -7,6 +7,8 @@
 import java.io.IOException;
 public class Game{
     static Piece selectedPiece=null;
+    static Square selectedSquare=null;
+    //Tracks the current piece and square selected for moving pieces
     public Game() throws IOException{
         new GUI();
     }

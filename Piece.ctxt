@@ -2,10 +2,12 @@
 comment0.target=Piece
 comment1.params=colour
 comment1.target=Piece(boolean)
+comment1.text=\ This\ abstract\ piece\ class\ is\ what\ each\ piece\ extends.\ It\ holds\ info\ that\ \r\n\ all\ pieces\ require\ such\ as\ the\ colour,\ icon,\ if\ it\ is\ captured,\ whether\ it\ has\ moved\r\n\ etc.\r\n
 comment2.params=start\ end
 comment2.target=boolean\ movePossible(Square,\ Square)
 comment3.params=
 comment3.target=boolean\ getColour()
+comment3.text=An\ abstract\ method\ needs\ to\ be\ overriden\ by\ each\ class\ separately.\ This\ is\ because\r\n\ all\ the\ pieces\ move\ differently.\r\n
 comment4.params=
 comment4.target=boolean\ getCaptured()
 comment5.params=captured

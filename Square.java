@@ -11,11 +11,15 @@ public class Square implements ActionListener{
     private Piece currentPiece;
     private int x;
     private int y;
+    //The square is a section of the board that holds a piece. x and y show its position
     
     final int buttonWidth=100;
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
+    /* Within each square it holds a jpanel that in turn holds a jbutton.
+     * These are used to represent the piece in the square by drawin an icon
+     */
     public Square(int x, int y, Piece piece){
         this.currentPiece=piece;
         this.x=x;
@@ -24,15 +28,55 @@ public class Square implements ActionListener{
         if(this.currentPiece!=null){
             pieceButton.setIcon(this.currentPiece.getPieceIcon());
         }
+        /*When each square is created, it sets up the jpanel and jbutton inside it.
+         * A square can be created with or without a piece in it. If it is created without,
+         * there will be no icon to draw. Otherwise, it has the icon of the piece inside
+         */
     }
     
     public void actionPerformed(ActionEvent e){
-        if((Game.selectedPiece==null && this.currentPiece!=null) || (Game.selectedPiece.getColour()==this.currentPiece.getColour())){
-            Game.selectedPiece=this.currentPiece;
-        }else if(Game.selectedPiece!=null){
-            this.currentPiece=Game.selectedPiece;
-            pieceButton.setIcon(this.currentPiece.getPieceIcon());
+        if(Game.selectedSquare!=this){
+            if(this.currentPiece!=null){
+                if(Game.selectedPiece==null){
+                    Game.selectedPiece=this.currentPiece;
+                    Game.selectedSquare=this;
+                    /*If a square is clicked and nothing is selected, the piece in the square
+                     * will be selected
+                     */
+                }else{
+                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                        this.currentPiece=Game.selectedPiece;
+                        Game.selectedSquare.setCurrentPiece(null);
+                        this.redrawIcon();
+                        Game.selectedSquare.redrawIcon();
+                        Game.selectedPiece=null;
+                        Game.selectedSquare=null;
+                        /*If the pieces are different colours, the selected piece will take the
+                         * one in the square.
+                         */ 
+                    }
+                }
+            }else if(Game.selectedPiece!=null){
+                if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                    this.currentPiece=Game.selectedPiece;
+                    Game.selectedSquare.setCurrentPiece(null);
+                    this.redrawIcon();
+                    Game.selectedSquare.redrawIcon();
+                    Game.selectedPiece=null;
+                    Game.selectedSquare=null;
+                    //If the square is empty, the selected piece will move into the empty square.
+                }
+            }
         }
+    }
+    
+    public void redrawIcon(){
+       if(this.currentPiece!=null){
+           pieceButton.setIcon(this.currentPiece.getPieceIcon());
+       }else{
+           pieceButton.setIcon(null);
+       }
+       //After a piece has changed square, the icon needs to be updated to match the piece
     }
     
     private void createButton(){
@@ -44,6 +88,7 @@ public class Square implements ActionListener{
         pieceButton.setBorderPainted(false);
         pieceButton.addActionListener(this);
         buttonPanel.add(pieceButton);
+        //When a square is created, and transparent jpanel and jbutton are set up to hold pieces
     }
 
     public int getX(){
