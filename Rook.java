@@ -29,33 +29,39 @@ public class Rook extends Piece{
             }
         }
         if(start.getX()==end.getX() || start.getY()==end.getY()){
-            if(!moveBlocked(start,end))return true;
+            if(!moveBlocked(start,end)) return true;
         }
+        Game.selectedPiece=null;
+        Game.selectedSquare=null;
         return false;
     }
     private boolean moveBlocked(Square start, Square end){
         if(start.getY()==end.getY()){
             if(end.getX()>start.getX()){
                 for(int i=start.getX()+1;i<end.getX();i++){
-                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null) return true;
-                    System.out.println("piece is blocked");
+                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null){
+                        return true;
+                    }
                 }
             }else{
                 for(int i=start.getX()-1;i>end.getX();i--){
-                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null) return true;
-                    System.out.println("piece is blocked");
+                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null){
+                        return true;
+                    }
                 }
             }
         }else{
             if(end.getY()>start.getY()){
                 for(int i=start.getY()+1;i<end.getY();i++){
-                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null) return true;
-                    System.out.println("piece is blocked");
+                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null){
+                        return true;
+                    }
                 }
             }else{
                 for(int i=start.getY()-1;i>end.getY();i--){
-                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null) return true;
-                    System.out.println("piece is blocked");
+                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null){
+                        return true;
+                    }
                 }
             }
         }

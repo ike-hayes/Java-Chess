@@ -150,40 +150,40 @@ public class GUI extends JFrame implements ActionListener{
     }
     private void standardGameSetup(){
         squares[0][0]=new Square(0,0,new Rook(true));
-        squares[0][1]=new Square(0,1,new Knight(true));
-        squares[0][2]=new Square(0,2,new Bishop(true));
-        squares[0][3]=new Square(0,3,new Queen(true));
-        squares[0][4]=new Square(0,4,new King(true));
-        squares[0][5]=new Square(0,5,new Bishop(true));
-        squares[0][6]=new Square(0,6,new Knight(true));
-        squares[0][7]=new Square(0,7,new Rook(true));
+        squares[1][0]=new Square(1,0,new Knight(true));
+        squares[2][0]=new Square(2,0,new Bishop(true));
+        squares[3][0]=new Square(3,0,new Queen(true));
+        squares[4][0]=new Square(4,0,new King(true));
+        squares[5][0]=new Square(5,0,new Bishop(true));
+        squares[6][0]=new Square(6,0,new Knight(true));
+        squares[7][0]=new Square(7,0,new Rook(true));
         for(int i=0;i<8;i++){
-            squares[1][i]=new Square(0,i,new Pawn(true));
+            squares[i][1]=new Square(i,1,new Pawn(true));
         }
         //Creates 8 white pawns in a row
         for (int i=2;i<6;i++) {
             for (int j=0;j<8;j++) {
-                squares[i][j]=new Square(i,j,null);
+                squares[j][i]=new Square(j,i,null);
             }
         }
         //Fills in all the squares without pieces
         for(int i=0;i<8;i++){
-            squares[6][i]=new Square(0,i,new Pawn(false));
+            squares[i][6]=new Square(i,6,new Pawn(false));
         }
         //Creates 8 black pawns in a row
-        squares[7][0]=new Square(0,0,new Rook(false));
-        squares[7][1]=new Square(0,1,new Knight(false));
-        squares[7][2]=new Square(0,2,new Bishop(false));
-        squares[7][3]=new Square(0,3,new Queen(false));
-        squares[7][4]=new Square(0,4,new King(false));
-        squares[7][5]=new Square(0,5,new Bishop(false));
-        squares[7][6]=new Square(0,6,new Knight(false));
-        squares[7][7]=new Square(0,7,new Rook(false)); 
+        squares[0][7]=new Square(0,7,new Rook(false));
+        squares[1][7]=new Square(1,7,new Knight(false));
+        squares[2][7]=new Square(2,7,new Bishop(false));
+        squares[3][7]=new Square(3,7,new Queen(false));
+        squares[4][7]=new Square(4,7,new King(false));
+        squares[5][7]=new Square(5,7,new Bishop(false));
+        squares[6][7]=new Square(6,7,new Knight(false));
+        squares[7][7]=new Square(7,7,new Rook(false)); 
         //Creating squares and filling them in with pieces in the default chess layout
         
         for(int i=7;i>-1;i--){
             for(int j=0;j<8;j++){
-                piecePanel.add(squares[i][j].buttonPanel);
+                piecePanel.add(squares[j][i].buttonPanel);
             }
         }
         //All these squares contain JPanels showing the pieces, which are then added to the board

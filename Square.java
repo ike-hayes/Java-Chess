@@ -36,35 +36,42 @@ public class Square implements ActionListener{
     
     public void actionPerformed(ActionEvent e){
         if(Game.selectedSquare!=this){
-            if(this.currentPiece!=null){
-                if(Game.selectedPiece==null){
-                    Game.selectedPiece=this.currentPiece;
+            if(Game.selectedPiece==null){
+                if(this.getCurrentPiece()!=null){
+                    Game.selectedPiece=this.getCurrentPiece();
                     Game.selectedSquare=this;
-                    /*If a square is clicked and nothing is selected, the piece in the square
-                     * will be selected
-                     */
-                }else{
-                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                        this.currentPiece=Game.selectedPiece;
-                        Game.selectedSquare.setCurrentPiece(null);
-                        this.redrawIcon();
-                        Game.selectedSquare.redrawIcon();
-                        Game.selectedPiece=null;
-                        Game.selectedSquare=null;
-                        /*If the pieces are different colours, the selected piece will take the
-                         * one in the square.
-                         */ 
-                    }
+                    System.out.println("piece selected "+this.getCurrentPiece()+"square selected "+this);
                 }
-            }else if(Game.selectedPiece!=null){
-                if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                    this.currentPiece=Game.selectedPiece;
-                    Game.selectedSquare.setCurrentPiece(null);
-                    this.redrawIcon();
-                    Game.selectedSquare.redrawIcon();
-                    Game.selectedPiece=null;
-                    Game.selectedSquare=null;
-                    //If the square is empty, the selected piece will move into the empty square.
+            }else{ 
+                if(this.getCurrentPiece()==null){
+                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                            System.out.println("piece "+Game.selectedPiece+" moved to "+this);
+                            Game.selectedPiece.setMoved(true);
+                            this.currentPiece=Game.selectedPiece;
+                            Game.selectedSquare.setCurrentPiece(null);
+                            this.redrawIcon();
+                            Game.selectedSquare.redrawIcon();
+                            Game.selectedPiece=null;
+                            Game.selectedSquare=null;
+                    }
+                }else{
+                    if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour()){
+                        Game.selectedPiece=this.getCurrentPiece();
+                        Game.selectedSquare=this;
+                        System.out.println("piece selected "+this.getCurrentPiece()+"square selected "+this);
+                    }else{
+                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                            System.out.println("piece "+Game.selectedPiece+" moved to "+this);
+                            Game.selectedPiece.setMoved(true);
+                            this.currentPiece.setCaptured(true);
+                            this.currentPiece=Game.selectedPiece;
+                            Game.selectedSquare.setCurrentPiece(null);
+                            this.redrawIcon();
+                            Game.selectedSquare.redrawIcon();
+                            Game.selectedPiece=null;
+                            Game.selectedSquare=null;
+                        }
+                    }
                 }
             }
         }
