@@ -2,7 +2,7 @@
  * The UI which shows the game to the player
  *
  * @author Ike Hayes
- * @version 12/5/22
+ * @version 17/6/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +14,15 @@ import java.io.IOException;
 import javax.swing.border.Border;
 //Imports all libraries required
 public class GUI extends JFrame implements ActionListener{
-    Icon wPawn=new ImageIcon("Images\\wP.png");
-    Icon bPawn=new ImageIcon("Images\\bP.png");
+    static Icon wPawn=new ImageIcon("Images\\wP.png");
+    static Icon bPawn=new ImageIcon("Images\\bP.png");
     //These two icons are used to indicate whose turn it is
     JPanel piecePanel=new JPanel();
+    static JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
+    static JTextArea moveList=new JTextArea();
+    static Move lastMove;
+    static String lastMoveString;
+    static int nMoves=0;
     
     static Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
@@ -57,7 +62,6 @@ public class GUI extends JFrame implements ActionListener{
         boardLayeredPane.add(piecePanel,1,0);
         //A layered pane is used to display the pieces over the board
         
-        JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
         statusLabel.setOpaque(true);
         statusLabel.setIconTextGap(5);
         statusLabel.setBackground(Color.WHITE);
@@ -75,7 +79,6 @@ public class GUI extends JFrame implements ActionListener{
          * button is placed into its own JPanel to be sized before being 
          * added to the layout.
          */
-        JTextArea moveList=new JTextArea("testing");
         moveList.setEditable(false);
         
         JPanel moveListPanel=new JPanel();
@@ -187,6 +190,19 @@ public class GUI extends JFrame implements ActionListener{
             }
         }
         //All these squares contain JPanels showing the pieces, which are then added to the board
+    }
+    public static void switchIcon(){
+        if(statusLabel.getIcon().equals(wPawn)){
+            statusLabel.setIcon(bPawn);
+            statusLabel.setText("Black's turn");
+        }else{
+            statusLabel.setIcon(wPawn);
+            statusLabel.setText("Whites's turn");
+        }
+    }
+    public static void updateMoveList(){
+        lastMove=Game.moves.get(Game.moves.size()-1);
+        //switch(lastMove.get
     }
     public void actionPerformed(ActionEvent e){}
 }

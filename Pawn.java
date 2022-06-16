@@ -2,7 +2,7 @@
  * The Pawn piece
  *
  * @author Ike Hayes
- * @version 2/6/22
+ * @version 16/6/22
  */
 import javax.swing.*;
 import java.awt.*;

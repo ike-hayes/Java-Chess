@@ -2,7 +2,7 @@
  * The squares on the chess board that will hold pieces
  *
  * @author Ike Hayes
- * @version 10/5/22
+ * @version 17/6/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +37,7 @@ public class Square implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(Game.selectedSquare!=this){
             if(Game.selectedPiece==null){
-                if(this.getCurrentPiece()!=null){
+                if(this.getCurrentPiece()!=null && this.getCurrentPiece().getColour()==Game.getTurn()){
                     Game.selectedPiece=this.getCurrentPiece();
                     Game.selectedSquare=this;
                     //If there is no piece selected and this square contains one, it is selected
@@ -45,6 +45,7 @@ public class Square implements ActionListener{
             }else{ 
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                        Game.moves.add(new Move(Game.selectedPiece,false,this,false,false));
                         Game.selectedPiece.setMoved(true);
                         this.currentPiece=Game.selectedPiece;
                         Game.selectedSquare.setCurrentPiece(null);
@@ -52,15 +53,17 @@ public class Square implements ActionListener{
                         Game.selectedSquare.redrawIcon();
                         Game.selectedPiece=null;
                         Game.selectedSquare=null;
+                        Game.switchTurn();
                         //If there is a piece selected and this square is empty, that piece will move to it (if possible)
                     }
                 }else{
-                    if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour()){
+                    if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour() && this.getCurrentPiece().getColour()==Game.getTurn()){
                         Game.selectedPiece=this.getCurrentPiece();
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
                         if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                            Game.moves.add(new Move(Game.selectedPiece,true,this,false,false));
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece.setCaptured(true);
                             this.currentPiece=Game.selectedPiece;
@@ -69,6 +72,7 @@ public class Square implements ActionListener{
                             Game.selectedSquare.redrawIcon();
                             Game.selectedPiece=null;
                             Game.selectedSquare=null;
+                            Game.switchTurn();
                             //If a piece of the opposite colour is clicked, that piece will take this one (if possible)
                         }
                     }
