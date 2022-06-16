@@ -10,6 +10,11 @@ import java.awt.event.*;
 public class Bishop extends Piece{
     Icon wBishop=new ImageIcon("Images\\wB.png");
     Icon bBishop=new ImageIcon("Images\\bB.png");
+    int xDisplacement;
+    int yDisplacement;
+    int xDirection;
+    int yDirection;
+    int steps;
     public Bishop(boolean colour){
        super(colour);
        if(this.getColour()){
@@ -19,6 +24,29 @@ public class Bishop extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
-        return true;
+        if(end.getCurrentPiece()!=null){
+            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
+                return false;
+            }
+        }
+        xDisplacement=end.getX()-start.getX();
+        yDisplacement=end.getY()-start.getY();
+        steps=Math.abs(yDisplacement);
+        xDirection=xDisplacement/steps;
+        yDirection=yDisplacement/steps;
+        if(yDisplacement==xDisplacement || yDisplacement==-xDisplacement){
+            if(!moveBlocked(start,end)) return true;
+        }
+        Game.selectedPiece=null;
+        Game.selectedSquare=null;
+        return false;
+    }
+    private boolean moveBlocked(Square start, Square end){
+        for(int i=1;i<steps;i++){
+            if(GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getCurrentPiece()!=null){
+                return true;
+            }
+        }
+        return false;
     }
 }

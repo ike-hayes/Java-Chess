@@ -40,12 +40,10 @@ public class Square implements ActionListener{
                 if(this.getCurrentPiece()!=null){
                     Game.selectedPiece=this.getCurrentPiece();
                     Game.selectedSquare=this;
-                    System.out.println("piece selected "+this.getCurrentPiece()+"square selected "+this);
                 }
             }else{ 
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                            System.out.println("piece "+Game.selectedPiece+" moved to "+this);
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece=Game.selectedPiece;
                             Game.selectedSquare.setCurrentPiece(null);
@@ -58,10 +56,8 @@ public class Square implements ActionListener{
                     if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour()){
                         Game.selectedPiece=this.getCurrentPiece();
                         Game.selectedSquare=this;
-                        System.out.println("piece selected "+this.getCurrentPiece()+"square selected "+this);
                     }else{
                         if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                            System.out.println("piece "+Game.selectedPiece+" moved to "+this);
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece.setCaptured(true);
                             this.currentPiece=Game.selectedPiece;
