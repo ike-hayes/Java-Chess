@@ -10,6 +10,8 @@ import java.awt.event.*;
 public class Pawn extends Piece{
     Icon wPawn=new ImageIcon("Images\\wP.png");
     Icon bPawn=new ImageIcon("Images\\bP.png");
+    int xDisplacement;
+    int yDisplacement;
     public Pawn(boolean colour){
        super(colour);
        if(this.getColour()){
@@ -19,6 +21,53 @@ public class Pawn extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
-        return true;
+        if(end.getCurrentPiece()!=null){
+            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
+                return false;
+            }
+        }
+        
+        xDisplacement=Math.abs(end.getX()-start.getX());
+        yDisplacement=end.getY()-start.getY();
+        if(xDisplacement==0 && end.getCurrentPiece()==null){
+            if(yDisplacement==1 && this.getColour()){
+                return true;
+            }else if(yDisplacement==2 && this.getColour()){
+                if(!this.getMoved() && !moveBlocked(start)){
+                    return true;
+                }
+            }
+            if(yDisplacement==-1 && !this.getColour()){
+                return true;
+            }else if(yDisplacement==-2 && !this.getColour()){
+                if(!this.getMoved() && !moveBlocked(start)){
+                    return true;
+                }
+            }
+        }
+        if(yDisplacement==1 && xDisplacement==1 && end.getCurrentPiece()!=null && this.getColour()){
+            return true;
+        }
+        if(yDisplacement==-1 && xDisplacement==1 && end.getCurrentPiece()!=null && !this.getColour()){
+            return true;
+        }
+        /* The pawn moves in different ways. On its first move, it can move either one or two squares forwards. 
+         * After that, it can only move one square. However, it captures diagonally one square left or right. It is
+         * important to distinguish between the black and white pawns because they cannot move backwards. white
+         * pawns can only move up the board and black pawns only down the board.
+         */
+        return false;
+    }
+    private boolean moveBlocked(Square start){
+        if(this.getColour()){
+            if(GUI.squares[start.getX()][start.getY()+1].getCurrentPiece()!=null){
+                return true;
+            }
+        }else{
+            if(GUI.squares[start.getX()][start.getY()-1].getCurrentPiece()!=null){
+                return true;
+            }
+        }
+        return false;
     }
 }

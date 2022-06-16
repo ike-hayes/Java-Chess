@@ -11,6 +11,9 @@ public class Rook extends Piece{
     Icon wRook=new ImageIcon("Images\\wR.png");
     Icon bRook=new ImageIcon("Images\\bR.png");
     //The two possible icons for different coloured rooks
+    int steps;
+    int xDirection;
+    int yDirection;
     public Rook(boolean colour){
        super(colour);
        if(this.getColour()){
@@ -28,6 +31,21 @@ public class Rook extends Piece{
                 return false;
             }
         }
+        /*A piece can't be moved to a square with another of the same colour. This is checked in the square class
+         * but needs to be checked again here for when pieces are blocked.
+         */
+        if(start.getX()==end.getX()){
+            xDirection=0;
+            steps=Math.abs(end.getY()-start.getY());
+            yDirection=(end.getY()-start.getY())/steps;
+        }else{
+            yDirection=0;
+            steps=Math.abs(end.getX()-start.getX());
+            xDirection=(end.getX()-start.getX())/steps;
+        }
+        /*Maths to find how the piece is moving. The number of squares it moves is counted as well as the direction
+         * which can be either 1,-1 or 0 in each direction. A rook can only ever move along the x or y axis, not both
+         */
         if(start.getX()==end.getX() || start.getY()==end.getY()){
             if(!moveBlocked(start,end)) return true;
         }
@@ -36,35 +54,12 @@ public class Rook extends Piece{
         return false;
     }
     private boolean moveBlocked(Square start, Square end){
-        if(start.getY()==end.getY()){
-            if(end.getX()>start.getX()){
-                for(int i=start.getX()+1;i<end.getX();i++){
-                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null){
-                        return true;
-                    }
-                }
-            }else{
-                for(int i=start.getX()-1;i>end.getX();i--){
-                    if(GUI.squares[i][start.getY()].getCurrentPiece()!=null){
-                        return true;
-                    }
-                }
-            }
-        }else{
-            if(end.getY()>start.getY()){
-                for(int i=start.getY()+1;i<end.getY();i++){
-                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null){
-                        return true;
-                    }
-                }
-            }else{
-                for(int i=start.getY()-1;i>end.getY();i--){
-                    if(GUI.squares[start.getX()][i].getCurrentPiece()!=null){
-                        return true;
-                    }
-                }
+        for(int i=1;i<steps;i++){
+            if(GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getCurrentPiece()!=null){
+                return true;
             }
         }
+        //Checks each square in between the rook and its target for if they are blocked by other pieces
         return false;
     }
 }

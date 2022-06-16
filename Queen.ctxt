@@ -4,4 +4,6 @@ comment1.params=colour
 comment1.target=Queen(boolean)
 comment2.params=start\ end
 comment2.target=boolean\ movePossible(Square,\ Square)
-numComments=3
+comment3.params=start\ end
+comment3.target=boolean\ moveBlocked(Square,\ Square)
+numComments=4

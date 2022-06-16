@@ -34,7 +34,11 @@ public class Bishop extends Piece{
         steps=Math.abs(yDisplacement);
         xDirection=xDisplacement/steps;
         yDirection=yDisplacement/steps;
-        if(yDisplacement==xDisplacement || yDisplacement==-xDisplacement){
+        /*The way a bishop moves, the x and y displacements will always be the same, but sometimes one or both will
+         * be negative. The direction can be 1 or -1 and indicates how the bishop is moving along that axis. A bishop
+         * always moves along both axes.
+         */
+        if(Math.abs(yDisplacement)==Math.abs(xDisplacement)){
             if(!moveBlocked(start,end)) return true;
         }
         Game.selectedPiece=null;
@@ -47,6 +51,7 @@ public class Bishop extends Piece{
                 return true;
             }
         }
+        //Checks each square in between the bishop and its target for if they are blocked by other pieces
         return false;
     }
 }

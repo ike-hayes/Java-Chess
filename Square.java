@@ -40,22 +40,25 @@ public class Square implements ActionListener{
                 if(this.getCurrentPiece()!=null){
                     Game.selectedPiece=this.getCurrentPiece();
                     Game.selectedSquare=this;
+                    //If there is no piece selected and this square contains one, it is selected
                 }
             }else{ 
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                            Game.selectedPiece.setMoved(true);
-                            this.currentPiece=Game.selectedPiece;
-                            Game.selectedSquare.setCurrentPiece(null);
-                            this.redrawIcon();
-                            Game.selectedSquare.redrawIcon();
-                            Game.selectedPiece=null;
-                            Game.selectedSquare=null;
+                        Game.selectedPiece.setMoved(true);
+                        this.currentPiece=Game.selectedPiece;
+                        Game.selectedSquare.setCurrentPiece(null);
+                        this.redrawIcon();
+                        Game.selectedSquare.redrawIcon();
+                        Game.selectedPiece=null;
+                        Game.selectedSquare=null;
+                        //If there is a piece selected and this square is empty, that piece will move to it (if possible)
                     }
                 }else{
                     if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour()){
                         Game.selectedPiece=this.getCurrentPiece();
                         Game.selectedSquare=this;
+                        //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
                         if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
                             Game.selectedPiece.setMoved(true);
@@ -66,6 +69,7 @@ public class Square implements ActionListener{
                             Game.selectedSquare.redrawIcon();
                             Game.selectedPiece=null;
                             Game.selectedSquare=null;
+                            //If a piece of the opposite colour is clicked, that piece will take this one (if possible)
                         }
                     }
                 }
