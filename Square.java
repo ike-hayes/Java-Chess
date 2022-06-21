@@ -2,7 +2,7 @@
  * The squares on the chess board that will hold pieces
  *
  * @author Ike Hayes
- * @version 17/6/22
+ * @version 21/6/22
  */
 import javax.swing.*;
 import java.awt.*;

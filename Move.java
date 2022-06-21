@@ -2,12 +2,14 @@
  * Creates the moves in the chess game
  *
  * @author Ike Hayes
- * @version 17/6/22
+ * @version 21/6/22
  */
 public class Move{
     private boolean colour;
     private Piece piece;
     private boolean capture;
+    private int startX;
+    private int startY;
     private int endX;
     private int endY;
     private boolean check;
@@ -19,17 +21,19 @@ public class Move{
         this.colour=colour;
         this.piece=piece;
         this.capture=capture;
+        this.startX=start.getX();
+        this.startY=start.getY();
         this.endX=end.getX();
         this.endY=end.getY();
         this.check=check;
         this.checkmate=checkmate;
-        if(piece.getClass().getSimpleName().equals("Pawn") && Math.abs(start.getY()-end.getY())==2){
+        if(piece.getClass().getSimpleName().equals("Pawn") && Math.abs(startY-endY)==2){
             doublePawnMove=true;
         }
-        if(piece.getClass().getSimpleName().equals("King") && end.getX()-start.getX()==2){
+        if(piece.getClass().getSimpleName().equals("King") && endX-startX==2){
             shortCastle=true;
         }
-        if(piece.getClass().getSimpleName().equals("King") && start.getX()-end.getX()==2){
+        if(piece.getClass().getSimpleName().equals("King") && startX-endX==2){
             longCastle=true;
         }
     }
@@ -44,6 +48,14 @@ public class Move{
     
     public boolean getCapture(){
         return this.capture;
+    }
+    
+    public int getStartX(){
+        return this.startX;
+    }
+    
+    public int getStartY(){
+        return this.startY;
     }
     
     public int getEndX(){

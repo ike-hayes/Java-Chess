@@ -2,7 +2,7 @@
  * The UI which shows the game to the player
  *
  * @author Ike Hayes
- * @version 17/6/22
+ * @version 21/6/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class GUI extends JFrame implements ActionListener{
     static JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
     static JTextArea moveList=new JTextArea();
     static Move lastMove;
-    static String lastMoveString;
+    static String lastMoveString="";
     static int nMoves=0;
     static HashMap<Integer,String> convertXNotation=new HashMap<Integer,String>();
     static HashMap<Integer,String> convertYNotation=new HashMap<Integer,String>();
@@ -40,7 +40,8 @@ public class GUI extends JFrame implements ActionListener{
         //This image is used for the board
         
         Border blackBorder=BorderFactory.createLineBorder(Color.black);
-        //Creates a plain black border which many of my components use
+        Font myFont=new Font("Consolas", Font.BOLD, 20);
+        //Creates a plain black border and font which many of my components use
         JPanel boardPanel=new JPanel(){
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
@@ -68,6 +69,7 @@ public class GUI extends JFrame implements ActionListener{
         statusLabel.setOpaque(true);
         statusLabel.setIconTextGap(5);
         statusLabel.setBackground(Color.WHITE);
+        statusLabel.setFont(myFont);
         
         JPanel statusLabelPanel=new JPanel();
         statusLabelPanel.setPreferredSize(new Dimension(300,80));
@@ -82,10 +84,20 @@ public class GUI extends JFrame implements ActionListener{
          * button is placed into its own JPanel to be sized before being 
          * added to the layout.
          */
+        
         moveList.setEditable(false);
+        moveList.setFont(myFont);
+
+        JScrollPane scrollBar=new JScrollPane (moveList);
+        scrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollBar.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollBar.setBounds(0,0,300,400);
+        scrollBar.setBorder(blackBorder);
+        //The move list can get quite long, so a scroll bar is used to browse it
         
         JPanel moveListPanel=new JPanel();
-        moveListPanel.add(moveList, BorderLayout.CENTER);
+        moveListPanel.setLayout(null);
+        moveListPanel.add(scrollBar);
         moveListPanel.setPreferredSize(new Dimension(300,400));
         moveListPanel.setMaximumSize(new Dimension(300,400));
         moveListPanel.setMinimumSize(new Dimension(300,400));
@@ -212,7 +224,7 @@ public class GUI extends JFrame implements ActionListener{
         convertYNotation.put(5,"6");
         convertYNotation.put(6,"7");
         convertYNotation.put(7,"8");
-        //Methods to convert from x and y values used interally to proper chess notation
+        //HashMaps used to convert from x and y values used interally to proper chess notation
     }
     
     public static void switchIcon(){
@@ -227,9 +239,7 @@ public class GUI extends JFrame implements ActionListener{
     
     public static void updateMoveList(){
         lastMove=Game.moves.get(Game.moves.size()-1);
-        if(lastMove.getColour()){
-            nMoves++;
-        }
+        lastMoveString="";
         if(lastMove.shortCastle){
             lastMoveString="O-O";
         }else if(lastMove.longCastle){
@@ -247,22 +257,29 @@ public class GUI extends JFrame implements ActionListener{
                 case("Rook"): lastMoveString="R";
                               break;
             }
-            if(lastMove.getCapture()){
-                lastMoveString=lastMoveString.concat("x");
+            if(lastMove.getCapture() && lastMove.getPiece().getClass().getSimpleName().equals("Pawn")){
+                lastMoveString+=convertXNotation.get(lastMove.getStartX());
+                lastMoveString+="x";
+            }else if(lastMove.getCapture()){
+                lastMoveString+="x";
             }
-            lastMoveString=lastMoveString.concat(convertXNotation.get(lastMove.getEndX()));
-            lastMoveString=lastMoveString.concat(convertYNotation.get(lastMove.getEndY()));
+            lastMoveString+=convertXNotation.get(lastMove.getEndX());
+            lastMoveString+=convertYNotation.get(lastMove.getEndY());
             if(lastMove.getCheck()){
-                lastMoveString=lastMoveString.concat("+");
+                lastMoveString+="+";
             }
             if(lastMove.getCheckmate()){
-                lastMoveString=lastMoveString.concat("#");
+                lastMoveString+="#";
             }
-            if(lastMove.getColour()){
-                moveList.append(nMoves+" "+lastMoveString);
-            }else{
-                moveList.append("   "+lastMoveString+"\n");
+        }
+        if(lastMove.getColour()){
+            nMoves++;
+            for(int i=lastMoveString.length();i<10;i++){
+                lastMoveString+=" ";
             }
+            moveList.append(nMoves+". "+lastMoveString);
+        }else{
+            moveList.append(lastMoveString+"\n");
         }
     }
     
