@@ -45,7 +45,7 @@ public class Square implements ActionListener{
             }else{ 
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                        Game.moves.add(new Move(Game.selectedPiece,false,this,false,false));
+                        Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this,false,false));
                         Game.selectedPiece.setMoved(true);
                         this.currentPiece=Game.selectedPiece;
                         Game.selectedSquare.setCurrentPiece(null);
@@ -63,7 +63,7 @@ public class Square implements ActionListener{
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
                         if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                            Game.moves.add(new Move(Game.selectedPiece,true,this,false,false));
+                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false,false));
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece.setCaptured(true);
                             this.currentPiece=Game.selectedPiece;

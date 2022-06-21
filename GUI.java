@@ -12,17 +12,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.border.Border;
+import java.util.HashMap;
 //Imports all libraries required
 public class GUI extends JFrame implements ActionListener{
     static Icon wPawn=new ImageIcon("Images\\wP.png");
     static Icon bPawn=new ImageIcon("Images\\bP.png");
     //These two icons are used to indicate whose turn it is
-    JPanel piecePanel=new JPanel();
+    static JPanel piecePanel=new JPanel();
     static JLabel statusLabel=new JLabel("White's turn", wPawn, SwingConstants.LEFT);
     static JTextArea moveList=new JTextArea();
     static Move lastMove;
     static String lastMoveString;
     static int nMoves=0;
+    static HashMap<Integer,String> convertXNotation=new HashMap<Integer,String>();
+    static HashMap<Integer,String> convertYNotation=new HashMap<Integer,String>();
     
     static Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
@@ -151,7 +154,8 @@ public class GUI extends JFrame implements ActionListener{
         this.setVisible(true);
         //Finally, the container is added to the frame and it is all set to visible
     }
-    private void standardGameSetup(){
+    
+    private static void standardGameSetup(){
         squares[0][0]=new Square(0,0,new Rook(true));
         squares[1][0]=new Square(1,0,new Knight(true));
         squares[2][0]=new Square(2,0,new Bishop(true));
@@ -190,7 +194,27 @@ public class GUI extends JFrame implements ActionListener{
             }
         }
         //All these squares contain JPanels showing the pieces, which are then added to the board
+        
+        convertXNotation.put(0,"a");
+        convertXNotation.put(1,"b");
+        convertXNotation.put(2,"c");
+        convertXNotation.put(3,"d");
+        convertXNotation.put(4,"e");
+        convertXNotation.put(5,"f");
+        convertXNotation.put(6,"g");
+        convertXNotation.put(7,"h");
+        
+        convertYNotation.put(0,"1");
+        convertYNotation.put(1,"2");
+        convertYNotation.put(2,"3");
+        convertYNotation.put(3,"4");
+        convertYNotation.put(4,"5");
+        convertYNotation.put(5,"6");
+        convertYNotation.put(6,"7");
+        convertYNotation.put(7,"8");
+        //Methods to convert from x and y values used interally to proper chess notation
     }
+    
     public static void switchIcon(){
         if(statusLabel.getIcon().equals(wPawn)){
             statusLabel.setIcon(bPawn);
@@ -200,9 +224,47 @@ public class GUI extends JFrame implements ActionListener{
             statusLabel.setText("Whites's turn");
         }
     }
+    
     public static void updateMoveList(){
         lastMove=Game.moves.get(Game.moves.size()-1);
-        //switch(lastMove.get
+        if(lastMove.getColour()){
+            nMoves++;
+        }
+        if(lastMove.shortCastle){
+            lastMoveString="O-O";
+        }else if(lastMove.longCastle){
+            lastMoveString="O-O-O";
+        }else{
+            switch(lastMove.getPiece().getClass().getSimpleName()){
+                case("King"): lastMoveString="K";
+                              break;
+                case("Queen"): lastMoveString="Q";
+                               break;
+                case("Bishop"): lastMoveString="B";
+                                break;
+                case("Knight"): lastMoveString="N";
+                                break;
+                case("Rook"): lastMoveString="R";
+                              break;
+            }
+            if(lastMove.getCapture()){
+                lastMoveString=lastMoveString.concat("x");
+            }
+            lastMoveString=lastMoveString.concat(convertXNotation.get(lastMove.getEndX()));
+            lastMoveString=lastMoveString.concat(convertYNotation.get(lastMove.getEndY()));
+            if(lastMove.getCheck()){
+                lastMoveString=lastMoveString.concat("+");
+            }
+            if(lastMove.getCheckmate()){
+                lastMoveString=lastMoveString.concat("#");
+            }
+            if(lastMove.getColour()){
+                moveList.append(nMoves+" "+lastMoveString);
+            }else{
+                moveList.append("   "+lastMoveString+"\n");
+            }
+        }
     }
+    
     public void actionPerformed(ActionEvent e){}
 }
