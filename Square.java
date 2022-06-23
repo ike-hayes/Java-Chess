@@ -17,6 +17,7 @@ public class Square implements ActionListener{
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
+    
     /* Within each square it holds a jpanel that in turn holds a jbutton.
      * These are used to represent the piece in the square by drawin an icon
      */
@@ -104,6 +105,26 @@ public class Square implements ActionListener{
         pieceButton.addActionListener(this);
         buttonPanel.add(pieceButton);
         //When a square is created, and transparent jpanel and jbutton are set up to hold pieces
+    }
+    
+    public boolean squareWatched(boolean colour){
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if(GUI.squares[i][j].getCurrentPiece()!=null){
+                    if(GUI.squares[i][j].getCurrentPiece().getColour()==colour && GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean squarePassable(boolean colour){
+        if(this.getCurrentPiece()==null && this.squareWatched(colour)==false){
+            return true;
+        }
+        return false;
     }
 
     public int getX(){

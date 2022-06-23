@@ -35,7 +35,7 @@ public class King extends Piece{
         //King can only move one square in any direction
         
         if(!this.getMoved() && GUI.squares[0][start.getY()].getCurrentPiece()!=null){
-            if(xDisplacement==-2 && GUI.squares[0][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[1][start.getY()].getCurrentPiece()==null && GUI.squares[2][start.getY()].getCurrentPiece()==null && GUI.squares[3][start.getY()].getCurrentPiece()==null){
+            if(xDisplacement==-2 && GUI.squares[0][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[1][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[2][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[3][start.getY()].squarePassable(this.getOpponent())){
                 GUI.squares[0][start.getY()].getCurrentPiece().setMoved(true);
                 GUI.squares[3][start.getY()].setCurrentPiece(GUI.squares[0][start.getY()].getCurrentPiece());
                 GUI.squares[0][start.getY()].setCurrentPiece(null);
@@ -46,7 +46,7 @@ public class King extends Piece{
         }
         
         if(!this.getMoved() && GUI.squares[7][start.getY()].getCurrentPiece()!=null){
-            if(xDisplacement==2 && GUI.squares[7][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[6][start.getY()].getCurrentPiece()==null && GUI.squares[5][start.getY()].getCurrentPiece()==null){
+            if(xDisplacement==2 && GUI.squares[7][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[6][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[5][start.getY()].squarePassable(this.getOpponent())){
                 GUI.squares[7][start.getY()].getCurrentPiece().setMoved(true);
                 GUI.squares[5][start.getY()].setCurrentPiece(GUI.squares[0][start.getY()].getCurrentPiece());
                 GUI.squares[7][start.getY()].setCurrentPiece(null);

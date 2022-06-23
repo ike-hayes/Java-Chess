@@ -29,6 +29,14 @@ public abstract class Piece{
         return this.white;
     }
     
+    public boolean getOpponent(){
+        if(this.white){
+            return false;
+        }else{
+            return true;
+        }
+    }
+    
     public boolean getCaptured(){
         return this.captured;
     }
