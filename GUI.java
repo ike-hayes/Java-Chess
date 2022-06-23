@@ -33,6 +33,7 @@ public class GUI extends JFrame implements ActionListener{
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));
+        this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //Creates the window with title "Chess". Also sets size and makes sure it closes
 

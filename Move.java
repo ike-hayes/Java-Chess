@@ -17,7 +17,7 @@ public class Move{
     boolean doublePawnMove=false;
     boolean shortCastle=false;
     boolean longCastle=false;
-    public Move(boolean colour, Piece piece, boolean capture, Square start, Square end, boolean check, boolean checkmate){
+    public Move(boolean colour, Piece piece, boolean capture, Square start, Square end){
         this.colour=colour;
         this.piece=piece;
         this.capture=capture;

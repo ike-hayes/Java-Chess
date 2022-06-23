@@ -27,7 +27,7 @@ public class Pawn extends Piece{
             }
         }
         
-        xDisplacement=Math.abs(end.getX()-start.getX());
+        xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         if(xDisplacement==0 && end.getCurrentPiece()==null){
             if(yDisplacement==1 && this.getColour()){
@@ -45,16 +45,33 @@ public class Pawn extends Piece{
                 }
             }
         }
-        if(yDisplacement==1 && xDisplacement==1 && end.getCurrentPiece()!=null && this.getColour()){
+        
+        if(yDisplacement==1 && Math.abs(xDisplacement)==1 && end.getCurrentPiece()!=null && this.getColour()){
             return true;
         }
-        if(yDisplacement==-1 && xDisplacement==1 && end.getCurrentPiece()!=null && !this.getColour()){
+        if(yDisplacement==-1 && Math.abs(xDisplacement)==1 && end.getCurrentPiece()!=null && !this.getColour()){
             return true;
         }
+        
+        if(GUI.lastMove.doublePawnMove && GUI.lastMove.getEndY()==start.getY() && GUI.lastMove.getPiece()==GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece()){
+            if(yDisplacement==1 && end.getCurrentPiece()==null && this.getColour() && start.getY()==4){
+                GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece().setCaptured(true);
+                GUI.squares[start.getX()+xDisplacement][start.getY()].setCurrentPiece(null);
+                GUI.squares[start.getX()+xDisplacement][start.getY()].redrawIcon();
+                return true;
+            }
+            if(yDisplacement==-1 && end.getCurrentPiece()==null && !this.getColour() && start.getY()==3){
+                GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece().setCaptured(true);
+                GUI.squares[start.getX()+xDisplacement][start.getY()].setCurrentPiece(null);
+                GUI.squares[start.getX()+xDisplacement][start.getY()].redrawIcon();
+                return true;
+            }
+        }
+        
         /* The pawn moves in different ways. On its first move, it can move either one or two squares forwards. 
          * After that, it can only move one square. However, it captures diagonally one square left or right. It is
          * important to distinguish between the black and white pawns because they cannot move backwards. white
-         * pawns can only move up the board and black pawns only down the board.
+         * pawns can only move up the board and black pawns only down the board. A pawn
          */
         return false;
     }
