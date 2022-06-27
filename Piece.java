@@ -30,11 +30,7 @@ public abstract class Piece{
     }
     
     public boolean getOpponent(){
-        if(this.white){
-            return false;
-        }else{
-            return true;
-        }
+        return !this.white;
     }
     
     public boolean getCaptured(){

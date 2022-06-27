@@ -29,7 +29,7 @@ public class King extends Piece{
         
         xDisplacement=end.getX()-start.getX();
         yDisplacement=Math.abs(end.getY()-start.getY());
-        if(Math.abs(xDisplacement)<=1 && yDisplacement<=1){
+        if(Math.abs(xDisplacement)<=1 && yDisplacement<=1 && !end.squareWatched(this.getOpponent())){
             return true;
         }
         //King can only move one square in any direction
