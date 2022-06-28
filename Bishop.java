@@ -32,6 +32,9 @@ public class Bishop extends Piece{
         xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         steps=Math.abs(yDisplacement);
+        if(steps==0){
+            return false;
+        }
         xDirection=xDisplacement/steps;
         yDirection=yDisplacement/steps;
         /*The way a bishop moves, the x and y displacements will always be the same, but sometimes one or both will

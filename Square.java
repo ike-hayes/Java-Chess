@@ -17,6 +17,8 @@ public class Square implements ActionListener{
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
+    private boolean squareWatchedWhite;
+    private boolean squareWatchedBlack;
     
     /* Within each square it holds a jpanel that in turn holds a jbutton.
      * These are used to represent the piece in the square by drawin an icon
@@ -46,10 +48,27 @@ public class Square implements ActionListener{
             }else{ 
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
-                        if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && Game.selectedSquare.getX()!=this.getX()){
+                        if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
+                            GUI.squares[this.getX()][this.getY()-1].getCurrentPiece().setCaptured(true);
+                            GUI.squares[this.getX()][this.getY()-1].setCurrentPiece(null);
+                            GUI.squares[this.getX()][this.getY()-1].redrawIcon();
                         }else{
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this));
+                        }
+                        if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()-2){
+                            GUI.squares[7][this.getY()].getCurrentPiece().setMoved(true);
+                            GUI.squares[5][this.getY()].setCurrentPiece(GUI.squares[0][this.getY()].getCurrentPiece());
+                            GUI.squares[7][this.getY()].setCurrentPiece(null);
+                            GUI.squares[5][this.getY()].redrawIcon();
+                            GUI.squares[7][this.getY()].redrawIcon();
+                        }
+                        if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()+2){
+                            GUI.squares[0][this.getY()].getCurrentPiece().setMoved(true);
+                            GUI.squares[3][this.getY()].setCurrentPiece(GUI.squares[0][this.getY()].getCurrentPiece());
+                            GUI.squares[0][this.getY()].setCurrentPiece(null);
+                            GUI.squares[3][this.getY()].redrawIcon();
+                            GUI.squares[0][this.getY()].redrawIcon();
                         }
                         Game.selectedPiece.setMoved(true);
                         this.currentPiece=Game.selectedPiece;
@@ -121,7 +140,11 @@ public class Square implements ActionListener{
     }
     
     public boolean squarePassable(boolean colour){
-        if(this.getCurrentPiece()==null && !this.squareWatched(colour)){
+        if(this.getCurrentPiece()==null && colour && squareWatchedBlack){
+            return true;
+        }
+        
+        if(this.getCurrentPiece()==null && !colour && squareWatchedWhite){
             return true;
         }
         return false;
@@ -149,5 +172,21 @@ public class Square implements ActionListener{
     
     public void setCurrentPiece(Piece piece){
         this.currentPiece=piece;
+    }
+    
+    public boolean getWatchedWhite(){
+        return this.squareWatchedWhite;
+    }
+    
+    public void setWatchedWhite(boolean watched){
+        this.squareWatchedWhite=watched;
+    }
+    
+    public boolean getWatchedBlack(){
+        return this.squareWatchedBlack;
+    }
+    
+    public void setWatchedBlack(boolean watched){
+        this.squareWatchedBlack=watched;
     }
 }

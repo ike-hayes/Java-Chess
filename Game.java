@@ -25,6 +25,16 @@ public class Game{
             whiteTurn=true;
             GUI.switchIcon();
         }
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if(GUI.squares[i][j].squareWatched(true)){
+                    GUI.squares[i][j].setWatchedWhite(true);
+                }
+                if(GUI.squares[i][j].squareWatched(false)){
+                    GUI.squares[i][j].setWatchedBlack(true);
+                }
+            }
+        }
     }
     
     public static boolean getTurn(){

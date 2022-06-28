@@ -46,6 +46,9 @@ public class Queen extends Piece{
         xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         steps=Math.abs(yDisplacement);
+        if(steps==0){
+            return false;
+        }
         xDirection=xDisplacement/steps;
         yDirection=yDisplacement/steps;
         if(Math.abs(yDisplacement)==Math.abs(xDisplacement)){

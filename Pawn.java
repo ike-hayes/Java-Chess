@@ -55,15 +55,9 @@ public class Pawn extends Piece{
         
         if(GUI.lastMove.doublePawnMove && GUI.lastMove.getEndY()==start.getY() && GUI.lastMove.getPiece()==GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece()){
             if(yDisplacement==1 && end.getCurrentPiece()==null && this.getColour() && start.getY()==4){
-                GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece().setCaptured(true);
-                GUI.squares[start.getX()+xDisplacement][start.getY()].setCurrentPiece(null);
-                GUI.squares[start.getX()+xDisplacement][start.getY()].redrawIcon();
                 return true;
             }
             if(yDisplacement==-1 && end.getCurrentPiece()==null && !this.getColour() && start.getY()==3){
-                GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece().setCaptured(true);
-                GUI.squares[start.getX()+xDisplacement][start.getY()].setCurrentPiece(null);
-                GUI.squares[start.getX()+xDisplacement][start.getY()].redrawIcon();
                 return true;
             }
         }
