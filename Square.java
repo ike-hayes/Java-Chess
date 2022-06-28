@@ -130,7 +130,14 @@ public class Square implements ActionListener{
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 if(GUI.squares[i][j].getCurrentPiece()!=null){
-                    if(GUI.squares[i][j].getCurrentPiece().getColour()==colour && GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
+                    if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="Pawn" && GUI.squares[i][j].getCurrentPiece().getColour()==colour){
+                        if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()+1 && !colour){
+                            return true;
+                        }
+                        if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()-1 && colour){
+                            return true;
+                        }
+                    }else if(GUI.squares[i][j].getCurrentPiece().getColour()==colour && GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
                         return true;
                     }
                 }

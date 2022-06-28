@@ -21,12 +21,6 @@ public class King extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
-        if(end.getCurrentPiece()!=null){
-            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
-                return false;
-            }
-        }
-        
         if(end.getWatchedBlack() && this.getColour()){
             return false;
         }

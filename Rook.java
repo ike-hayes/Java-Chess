@@ -26,21 +26,19 @@ public class Rook extends Piece{
         */
     }
     public boolean movePossible(Square start, Square end){
-        if(end.getCurrentPiece()!=null){
-            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
-                return false;
-            }
-        }
-        /*A piece can't be moved to a square with another of the same colour. This is checked in the square class
-         * but needs to be checked again here for when pieces are blocked.
-         */
         if(start.getX()==end.getX()){
             xDirection=0;
             steps=Math.abs(end.getY()-start.getY());
+            if(steps==0){
+                return false;
+            }
             yDirection=(end.getY()-start.getY())/steps;
         }else{
             yDirection=0;
             steps=Math.abs(end.getX()-start.getX());
+            if(steps==0){
+                return false;
+            }
             xDirection=(end.getX()-start.getX())/steps;
         }
         /*Maths to find how the piece is moving. The number of squares it moves is counted as well as the direction

@@ -21,12 +21,6 @@ public class Pawn extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
-        if(end.getCurrentPiece()!=null){
-            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
-                return false;
-            }
-        }
-        
         xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         if(xDisplacement==0 && end.getCurrentPiece()==null){

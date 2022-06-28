@@ -24,19 +24,19 @@ public class Queen extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
-        if(end.getCurrentPiece()!=null){
-            if(start.getCurrentPiece().getColour()==end.getCurrentPiece().getColour()){
-                return false;
-            }
-        }
-        
         if(start.getX()==end.getX()){
             xDirection=0;
             steps=Math.abs(end.getY()-start.getY());
+            if(steps==0){
+                return false;
+            }
             yDirection=(end.getY()-start.getY())/steps;
         }else if(start.getY()==end.getY()){
             yDirection=0;
             steps=Math.abs(end.getX()-start.getX());
+            if(steps==0){
+                return false;
+            }
             xDirection=(end.getX()-start.getX())/steps;
         }
         if(start.getX()==end.getX() || start.getY()==end.getY()){

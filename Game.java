@@ -18,15 +18,12 @@ public class Game{
     
     public static void switchTurn(){
         GUI.updateMoveList();
-        if(whiteTurn){
-            whiteTurn=false;
-            GUI.switchIcon();
-        }else{
-            whiteTurn=true;
-            GUI.switchIcon();
-        }
+        whiteTurn=!whiteTurn;
+        GUI.switchIcon();
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
+                GUI.squares[i][j].setWatchedWhite(false);
+                GUI.squares[i][j].setWatchedBlack(false);
                 if(GUI.squares[i][j].squareWatched(true)){
                     GUI.squares[i][j].setWatchedWhite(true);
                 }
