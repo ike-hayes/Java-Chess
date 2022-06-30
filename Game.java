@@ -12,6 +12,12 @@ public class Game{
     //Tracks the current piece and square selected for moving pieces
     private static boolean whiteTurn=true;
     static ArrayList<Move> moves=new ArrayList<Move>();
+    
+    static Square whiteKingSquare;
+    static Square blackKingSquare;
+    
+    static boolean whiteInCheck;
+    static boolean blackInCheck;
     public Game() throws IOException{
         new GUI();
     }
@@ -19,19 +25,37 @@ public class Game{
     public static void switchTurn(){
         GUI.updateMoveList();
         whiteTurn=!whiteTurn;
-        GUI.switchIcon();
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 GUI.squares[i][j].setWatchedWhite(false);
                 GUI.squares[i][j].setWatchedBlack(false);
+                whiteInCheck=false;
+                blackInCheck=false;
                 if(GUI.squares[i][j].squareWatched(true)){
                     GUI.squares[i][j].setWatchedWhite(true);
                 }
                 if(GUI.squares[i][j].squareWatched(false)){
                     GUI.squares[i][j].setWatchedBlack(true);
                 }
+                if(GUI.squares[i][j].getCurrentPiece()!=null){
+                    if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="King"){
+                        if(GUI.squares[i][j].getCurrentPiece().getColour()==true){
+                            whiteKingSquare=GUI.squares[i][j];
+                            if(GUI.squares[i][j].getWatchedBlack()){
+                                whiteInCheck=true;
+                            }
+                        }
+                        if(GUI.squares[i][j].getCurrentPiece().getColour()==false){
+                            blackKingSquare=GUI.squares[i][j];
+                            if(GUI.squares[i][j].getWatchedWhite()){
+                                blackInCheck=true;
+                            }
+                        }
+                    }
+                }
             }
         }
+        GUI.switchIcon();
     }
     
     public static boolean getTurn(){

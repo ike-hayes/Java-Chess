@@ -231,10 +231,18 @@ public class GUI extends JFrame implements ActionListener{
     public static void switchIcon(){
         if(statusLabel.getIcon().equals(wPawn)){
             statusLabel.setIcon(bPawn);
-            statusLabel.setText("Black's turn");
+            if(Game.blackInCheck){
+                statusLabel.setText("Black is in check");
+            }else{
+                statusLabel.setText("Black's turn");
+            }
         }else{
             statusLabel.setIcon(wPawn);
-            statusLabel.setText("Whites's turn");
+            if(Game.whiteInCheck){
+                statusLabel.setText("White is in check");
+            }else{
+                statusLabel.setText("White's turn");
+            }
         }
     }
     

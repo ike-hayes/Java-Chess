@@ -20,6 +20,11 @@ public class Square implements ActionListener{
     private boolean squareWatchedWhite;
     private boolean squareWatchedBlack;
     
+    private boolean temporaryBlock=false;
+    private boolean temporaryEmpty=false;
+    
+    private boolean moveRemovesCheck;
+    
     /* Within each square it holds a jpanel that in turn holds a jbutton.
      * These are used to represent the piece in the square by drawin an icon
      */
@@ -86,7 +91,17 @@ public class Square implements ActionListener{
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
-                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                        Game.selectedSquare.setTemporaryEmpty(true);
+                        this.setTemporaryBlock(true);
+                        if(!Game.whiteKingSquare.squareWatched(false) && Game.getTurn()){
+                            moveRemovesCheck=true;
+                        }
+                        if(!Game.whiteKingSquare.squareWatched(true) && !Game.getTurn()){
+                            moveRemovesCheck=true;
+                        }
+                        Game.selectedSquare.setTemporaryEmpty(false);
+                        this.setTemporaryBlock(false);
+                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece.setCaptured(true);
@@ -99,6 +114,7 @@ public class Square implements ActionListener{
                             Game.switchTurn();
                             //If a piece of the opposite colour is clicked, that piece will take this one (if possible)
                         }
+                        moveRemovesCheck=false;
                     }
                 }
             }
@@ -147,11 +163,11 @@ public class Square implements ActionListener{
     }
     
     public boolean squarePassable(boolean colour){
-        if(this.getCurrentPiece()==null && colour && squareWatchedBlack){
+        if(this.getCurrentPiece()==null && colour && !squareWatchedWhite){
             return true;
         }
         
-        if(this.getCurrentPiece()==null && !colour && squareWatchedWhite){
+        if(this.getCurrentPiece()==null && !colour && !squareWatchedBlack){
             return true;
         }
         return false;
@@ -195,5 +211,21 @@ public class Square implements ActionListener{
     
     public void setWatchedBlack(boolean watched){
         this.squareWatchedBlack=watched;
+    }
+    
+    public boolean getTemporaryBlock(){
+        return this.temporaryBlock;
+    }
+    
+    public void setTemporaryBlock(boolean blocked){
+        this.temporaryBlock=blocked;
+    }
+    
+    public boolean getTemporaryEmpty(){
+        return this.temporaryEmpty;
+    }
+    
+    public void setTemporaryEmpty(boolean empty){
+        this.temporaryEmpty=empty;
     }
 }

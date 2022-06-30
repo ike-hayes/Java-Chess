@@ -61,7 +61,10 @@ public class Queen extends Piece{
     }
     private boolean moveBlocked(Square start, Square end){
         for(int i=1;i<steps;i++){
-            if(GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getCurrentPiece()!=null){
+            if(GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getCurrentPiece()!=null && GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getTemporaryEmpty()!=true){
+                return true;
+            }
+            if(GUI.squares[start.getX()+(i*xDirection)][start.getY()+(i*yDirection)].getTemporaryBlock()){
                 return true;
             }
         }
