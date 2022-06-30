@@ -50,9 +50,20 @@ public class Square implements ActionListener{
                     Game.selectedSquare=this;
                     //If there is no piece selected and this square contains one, it is selected
                 }
-            }else{ 
+            }else{
+                moveRemovesCheck=false;
+                Game.selectedSquare.setTemporaryEmpty(true);
+                this.setTemporaryBlock(true);
+                if(!Game.whiteKingSquare.squareWatched(false) && Game.getTurn()){
+                    moveRemovesCheck=true;
+                }
+                if(!Game.whiteKingSquare.squareWatched(true) && !Game.getTurn()){
+                    moveRemovesCheck=true;
+                }
+                Game.selectedSquare.setTemporaryEmpty(false);
+                this.setTemporaryBlock(false);
                 if(this.getCurrentPiece()==null){
-                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this)){
+                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
                             GUI.squares[this.getX()][this.getY()-1].getCurrentPiece().setCaptured(true);
@@ -91,16 +102,6 @@ public class Square implements ActionListener{
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
-                        Game.selectedSquare.setTemporaryEmpty(true);
-                        this.setTemporaryBlock(true);
-                        if(!Game.whiteKingSquare.squareWatched(false) && Game.getTurn()){
-                            moveRemovesCheck=true;
-                        }
-                        if(!Game.whiteKingSquare.squareWatched(true) && !Game.getTurn()){
-                            moveRemovesCheck=true;
-                        }
-                        Game.selectedSquare.setTemporaryEmpty(false);
-                        this.setTemporaryBlock(false);
                         if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
                             Game.selectedPiece.setMoved(true);
@@ -114,7 +115,6 @@ public class Square implements ActionListener{
                             Game.switchTurn();
                             //If a piece of the opposite colour is clicked, that piece will take this one (if possible)
                         }
-                        moveRemovesCheck=false;
                     }
                 }
             }

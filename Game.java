@@ -20,6 +20,8 @@ public class Game{
     static boolean blackInCheck;
     public Game() throws IOException{
         new GUI();
+        whiteKingSquare=GUI.squares[4][0];
+        blackKingSquare=GUI.squares[4][7];
     }
     
     public static void switchTurn(){
