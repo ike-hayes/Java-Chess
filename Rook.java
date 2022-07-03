@@ -47,8 +47,6 @@ public class Rook extends Piece{
         if(start.getX()==end.getX() || start.getY()==end.getY()){
             if(!moveBlocked(start,end)) return true;
         }
-        Game.selectedPiece=null;
-        Game.selectedSquare=null;
         return false;
     }
     private boolean moveBlocked(Square start, Square end){

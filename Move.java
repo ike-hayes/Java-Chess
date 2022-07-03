@@ -12,8 +12,6 @@ public class Move{
     private int startY;
     private int endX;
     private int endY;
-    private boolean check;
-    private boolean checkmate;
     boolean doublePawnMove=false;
     boolean shortCastle=false;
     boolean longCastle=false;
@@ -25,8 +23,6 @@ public class Move{
         this.startY=start.getY();
         this.endX=end.getX();
         this.endY=end.getY();
-        this.check=check;
-        this.checkmate=checkmate;
         if(piece.getClass().getSimpleName().equals("Pawn") && Math.abs(startY-endY)==2){
             doublePawnMove=true;
         }
@@ -64,13 +60,5 @@ public class Move{
     
     public int getEndY(){
         return this.endY;
-    }
-    
-    public boolean getCheck(){
-        return this.check;
-    }
-    
-    public boolean getCheckmate(){
-        return this.checkmate;
     }
 }

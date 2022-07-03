@@ -274,20 +274,20 @@ public class GUI extends JFrame implements ActionListener{
             }
             lastMoveString+=convertXNotation.get(lastMove.getEndX());
             lastMoveString+=convertYNotation.get(lastMove.getEndY());
-            if(lastMove.getCheck()){
-                lastMoveString+="+";
-            }
-            if(lastMove.getCheckmate()){
-                lastMoveString+="#";
-            }
         }
         if(lastMove.getColour()){
             nMoves++;
+            if(Game.blackInCheck){
+                lastMoveString+="+";
+            }
             for(int i=lastMoveString.length();i<10;i++){
                 lastMoveString+=" ";
             }
             moveList.append(nMoves+". "+lastMoveString);
         }else{
+            if(Game.whiteInCheck){
+                lastMoveString+="+";
+            }
             moveList.append(lastMoveString+"\n");
         }
     }

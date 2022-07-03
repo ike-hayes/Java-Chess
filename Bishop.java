@@ -39,8 +39,6 @@ public class Bishop extends Piece{
         if(Math.abs(yDisplacement)==Math.abs(xDisplacement)){
             if(!moveBlocked(start,end)) return true;
         }
-        Game.selectedPiece=null;
-        Game.selectedSquare=null;
         return false;
     }
     private boolean moveBlocked(Square start, Square end){

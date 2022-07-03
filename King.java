@@ -12,6 +12,7 @@ public class King extends Piece{
     Icon bKing=new ImageIcon("Images\\bK.png");
     int xDisplacement;
     int yDisplacement;
+    int steps;
     public King(boolean colour){
        super(colour);
        if(this.getColour()){
@@ -31,7 +32,8 @@ public class King extends Piece{
         
         xDisplacement=end.getX()-start.getX();
         yDisplacement=Math.abs(end.getY()-start.getY());
-        if(Math.abs(xDisplacement)<=1 && yDisplacement<=1){
+        steps=xDisplacement+yDisplacement;
+        if(Math.abs(xDisplacement)<=1 && yDisplacement<=1 && steps!=0){
             return true;
         }
         //King can only move one square in any direction

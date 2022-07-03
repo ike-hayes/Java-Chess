@@ -17,8 +17,8 @@ public class Square implements ActionListener{
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
-    private boolean squareWatchedWhite;
-    private boolean squareWatchedBlack;
+    private boolean squareWatchedWhite=false;
+    private boolean squareWatchedBlack=false;
     
     private boolean temporaryBlock=false;
     private boolean temporaryEmpty=false;
@@ -54,11 +54,22 @@ public class Square implements ActionListener{
                 moveRemovesCheck=false;
                 Game.selectedSquare.setTemporaryEmpty(true);
                 this.setTemporaryBlock(true);
-                if(!Game.whiteKingSquare.squareWatched(false) && Game.getTurn()){
-                    moveRemovesCheck=true;
-                }
-                if(!Game.whiteKingSquare.squareWatched(true) && !Game.getTurn()){
-                    moveRemovesCheck=true;
+                if(Game.getTurn()){
+                    if(Game.selectedPiece.getClass().getSimpleName()=="King"){
+                        if(!this.squareWatched(false)){
+                            moveRemovesCheck=true;
+                        }
+                    }else if(!Game.whiteKingSquare.squareWatched(false)){
+                        moveRemovesCheck=true;
+                    }
+                }else{
+                    if(Game.selectedPiece.getClass().getSimpleName()=="King"){
+                        if(!this.squareWatched(true)){
+                            moveRemovesCheck=true;
+                        }
+                    }else if(!Game.blackKingSquare.squareWatched(true)){
+                        moveRemovesCheck=true;
+                    }
                 }
                 Game.selectedSquare.setTemporaryEmpty(false);
                 this.setTemporaryBlock(false);
