@@ -56,4 +56,5 @@ public abstract class Piece{
     public void setPieceIcon(Icon icon){
         this.icon=icon;
     }
+    //Getters and setters 
 }

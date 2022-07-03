@@ -244,6 +244,7 @@ public class GUI extends JFrame implements ActionListener{
                 statusLabel.setText("White's turn");
             }
         }
+        //Updates the icon panel with whos turn it is, as well as if they are in check
     }
     
     public static void updateMoveList(){
@@ -290,6 +291,11 @@ public class GUI extends JFrame implements ActionListener{
             }
             moveList.append(lastMoveString+"\n");
         }
+        /* The raw information from the program needs to be converted to 
+         * chess notation to go on the move list. Chess notation contains
+         * information about which piece moved, the square it goes to, and 
+         * whether the move is a capture or check.
+         */
     }
     
     public void actionPerformed(ActionEvent e){}

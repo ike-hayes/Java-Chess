@@ -17,6 +17,9 @@ public class Square implements ActionListener{
     final int buttonHeight=100;
     JPanel buttonPanel=new JPanel();
     JButton pieceButton=new JButton();
+    /* Within each square it holds a jpanel that in turn holds a jbutton.
+     * These are used to represent the piece in the square by drawing an icon
+     */
     private boolean squareWatchedWhite=false;
     private boolean squareWatchedBlack=false;
     
@@ -25,9 +28,6 @@ public class Square implements ActionListener{
     
     private boolean moveRemovesCheck;
     
-    /* Within each square it holds a jpanel that in turn holds a jbutton.
-     * These are used to represent the piece in the square by drawin an icon
-     */
     public Square(int x, int y, Piece piece){
         this.currentPiece=piece;
         this.x=x;
@@ -73,6 +73,11 @@ public class Square implements ActionListener{
                 }
                 Game.selectedSquare.setTemporaryEmpty(false);
                 this.setTemporaryBlock(false);
+                /* This section checks if the move would leave the players king
+                 * in check. The square the piece is moving too is set to be temporarily
+                 * containing a 'piece', and the start square is temporarily empty.
+                 * Each enemy piece is then checked to see if it attacks the king.
+                 */
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
@@ -83,6 +88,7 @@ public class Square implements ActionListener{
                         }else{
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this));
                         }
+                        //An en passant move requires a pawn to be taken that is on a different square
                         if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()-2){
                             GUI.squares[7][this.getY()].getCurrentPiece().setMoved(true);
                             GUI.squares[5][this.getY()].setCurrentPiece(GUI.squares[0][this.getY()].getCurrentPiece());
@@ -97,6 +103,7 @@ public class Square implements ActionListener{
                             GUI.squares[3][this.getY()].redrawIcon();
                             GUI.squares[0][this.getY()].redrawIcon();
                         }
+                        //Castling king or queenside also moves the rook involved
                         Game.selectedPiece.setMoved(true);
                         this.currentPiece=Game.selectedPiece;
                         Game.selectedSquare.setCurrentPiece(null);
@@ -171,6 +178,7 @@ public class Square implements ActionListener{
             }
         }
         return false;
+        //A method to see if any enemy pieces are watching a certain square
     }
     
     public boolean squarePassable(boolean colour){
@@ -182,6 +190,7 @@ public class Square implements ActionListener{
             return true;
         }
         return false;
+        //Checks if a square is passable for the king when castling
     }
 
     public int getX(){
@@ -239,4 +248,5 @@ public class Square implements ActionListener{
     public void setTemporaryEmpty(boolean empty){
         this.temporaryEmpty=empty;
     }
+    //Getters and setters
 }

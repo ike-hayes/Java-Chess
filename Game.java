@@ -22,6 +22,7 @@ public class Game{
         new GUI();
         whiteKingSquare=GUI.squares[4][0];
         blackKingSquare=GUI.squares[4][7];
+        //The squares that contain the kings are tracked for check
     }
     
     public static void switchTurn(){
@@ -37,6 +38,9 @@ public class Game{
                 if(GUI.squares[i][j].squareWatched(false)){
                     GUI.squares[i][j].setWatchedBlack(true);
                 }
+                /*Each square is checked for if it is watched by white or black
+                 * pieces. This is so the king cannot move into check.
+                 */
                 if(GUI.squares[i][j].getCurrentPiece()!=null){
                     if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="King"){
                         if(GUI.squares[i][j].getCurrentPiece().getColour()==true){
@@ -52,12 +56,16 @@ public class Game{
                             }
                         }
                     }
+                    /*The squares that contain kings are updated and tested
+                     * to see if each colour is in check
+                     */
                 }
             }
         }
         GUI.switchIcon();
         GUI.updateMoveList();
         whiteTurn=!whiteTurn;
+        //Finally, the turn is switched to the other player
     }
     
     public static boolean getTurn(){

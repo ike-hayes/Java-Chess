@@ -2,7 +2,6 @@
 comment0.target=Square
 comment1.params=x\ y\ piece
 comment1.target=Square(int,\ int,\ Piece)
-comment1.text=\ Within\ each\ square\ it\ holds\ a\ jpanel\ that\ in\ turn\ holds\ a\ jbutton.\r\n\ These\ are\ used\ to\ represent\ the\ piece\ in\ the\ square\ by\ drawin\ an\ icon\r\n
 comment10.params=y
 comment10.target=void\ setY(int)
 comment11.params=

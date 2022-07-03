@@ -49,6 +49,7 @@ public class King extends Piece{
                 return true;
             }
         }
+        //The king can also castle if neither it or the rook has moved and all the squares between are empty
         return false;
     }
 }

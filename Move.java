@@ -15,6 +15,7 @@ public class Move{
     boolean doublePawnMove=false;
     boolean shortCastle=false;
     boolean longCastle=false;
+    //Contains all the information about the last move
     public Move(boolean colour, Piece piece, boolean capture, Square start, Square end){
         this.colour=colour;
         this.piece=piece;
@@ -32,6 +33,9 @@ public class Move{
         if(piece.getClass().getSimpleName().equals("King") && startX-endX==2){
             longCastle=true;
         }
+        /*These moves are used to convert to notation. Each move contains all
+         * the required information to add to the move list.
+         */
     }
     
     public boolean getColour(){
