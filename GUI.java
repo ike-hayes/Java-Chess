@@ -232,7 +232,7 @@ public class GUI extends JFrame implements ActionListener{
         if(statusLabel.getIcon().equals(wPawn)){
             statusLabel.setIcon(bPawn);
             if(Game.blackCheckmated){
-                statusLabel.setText("Black loses by checkmate");
+                statusLabel.setText("Black is checkmated");
             }else if(Game.blackInCheck){
                 statusLabel.setText("Black is in check");
             }else{
@@ -241,7 +241,7 @@ public class GUI extends JFrame implements ActionListener{
         }else{
             statusLabel.setIcon(wPawn);
             if(Game.whiteCheckmated){
-                statusLabel.setText("White loses by checkmate");
+                statusLabel.setText("White is checkmated");
             }else if(Game.whiteInCheck){
                 statusLabel.setText("White is in check");
             }else{

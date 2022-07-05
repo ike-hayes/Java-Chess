@@ -101,7 +101,6 @@ public class Game{
                                         blackRemovesCheck=true;
                                     }
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && blackRemovesCheck){
-                                    System.out.println("can move "+GUI.squares[i][j].getCurrentPiece()+" to "+GUI.squares[a][b].getX()+" "+GUI.squares[a][b].getY());
                                     blackHasMoves=true;
                                 }
                             }
@@ -113,6 +112,7 @@ public class Game{
             }
         }
         if(!whiteHasMoves && whiteTurn){
+            gameActive=false;
             if(whiteInCheck){
                 whiteCheckmated=true;
             }else{
@@ -120,6 +120,7 @@ public class Game{
             }
         }
         if(!blackHasMoves && !whiteTurn){
+            gameActive=false;
             if(blackInCheck){
                 blackCheckmated=true;
             }else{
