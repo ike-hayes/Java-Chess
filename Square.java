@@ -45,7 +45,7 @@ public class Square implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(Game.selectedSquare!=this && Game.gameActive){
             if(Game.selectedPiece==null){
-                if(this.getCurrentPiece()!=null && this.getCurrentPiece().getColour()==Game.getTurn()){
+                if(this.getCurrentPiece()!=null && this.getCurrentPiece().getColour()==Game.whiteTurn){
                     Game.selectedPiece=this.getCurrentPiece();
                     Game.selectedSquare=this;
                     //If there is no piece selected and this square contains one, it is selected
@@ -54,7 +54,7 @@ public class Square implements ActionListener{
                 moveRemovesCheck=false;
                 Game.selectedSquare.setTemporaryEmpty(true);
                 this.setTemporaryBlock(true);
-                if(Game.getTurn()){
+                if(Game.whiteTurn){
                     if(Game.selectedPiece.getClass().getSimpleName()=="King"){
                         if(this.getCurrentPiece()!=null){
                             if(!this.squareWatched(false) && this.getCurrentPiece().getColour()!=Game.selectedPiece.getColour()){
@@ -123,7 +123,7 @@ public class Square implements ActionListener{
                         //If there is a piece selected and this square is empty, that piece will move to it (if possible)
                     }
                 }else{
-                    if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour() && this.getCurrentPiece().getColour()==Game.getTurn()){
+                    if(this.getCurrentPiece().getColour()==Game.selectedPiece.getColour() && this.getCurrentPiece().getColour()==Game.whiteTurn){
                         Game.selectedPiece=this.getCurrentPiece();
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected

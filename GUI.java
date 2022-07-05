@@ -30,6 +30,12 @@ public class GUI extends JFrame implements ActionListener{
     static Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
     
+    static JButton resignButton=new JButton("Resign?");
+    static JButton drawButton=new JButton("Offer Draw?");
+    
+    static boolean drawOffered=false;
+    static boolean drawButtonClicked;
+    
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));
@@ -106,7 +112,6 @@ public class GUI extends JFrame implements ActionListener{
         moveListPanel.setBorder(blackBorder);
         //An area which shows the past moves in the game
         
-        JButton resignButton=new JButton("Resign?");
         resignButton.setPreferredSize(new Dimension(150,100));
         resignButton.setMaximumSize(new Dimension(150,100));
         resignButton.setMinimumSize(new Dimension(150,100));
@@ -122,7 +127,6 @@ public class GUI extends JFrame implements ActionListener{
         resignButtonPanel.setMinimumSize(new Dimension(150,100));
         //A button that gives the player an option to resign
         
-        JButton drawButton=new JButton("Offer Draw?");
         drawButton.setPreferredSize(new Dimension(150,100));
         drawButton.setMaximumSize(new Dimension(150,100));
         drawButton.setMinimumSize(new Dimension(150,100));
@@ -251,6 +255,11 @@ public class GUI extends JFrame implements ActionListener{
         if(Game.stalemate){
             statusLabel.setText("Draw by stalemate");
         }
+        if(drawOffered){
+            drawButton.setText("Accept draw?");
+        }else{
+            drawButton.setText("Offer draw?");
+        }
         //Updates the icon panel with whos turn it is, as well as if they are in check
     }
     
@@ -308,5 +317,26 @@ public class GUI extends JFrame implements ActionListener{
          */
     }
     
-    public void actionPerformed(ActionEvent e){}
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource()==resignButton){
+            if(Game.whiteTurn){
+                Game.whiteResigns=true;
+                statusLabel.setText("White resigns");
+            }else{
+                Game.blackResigns=true;
+                statusLabel.setText("Black resigns");
+            }
+            Game.gameActive=false;
+        }else if(e.getSource()==drawButton){
+            if(!drawButtonClicked){
+                if(!drawOffered){
+                   drawOffered=true; 
+                }else{
+                    Game.gameActive=false;
+                    statusLabel.setText("Draw by agreement");
+                }
+                drawButtonClicked=true;
+            }
+        }
+    }
 }
