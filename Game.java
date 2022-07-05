@@ -18,6 +18,14 @@ public class Game{
     
     static boolean whiteInCheck;
     static boolean blackInCheck;
+    static boolean whiteHasMoves;
+    static boolean blackHasMoves;
+    static boolean whiteRemovesCheck;
+    static boolean blackRemovesCheck;
+    static boolean whiteCheckmated;
+    static boolean blackCheckmated;
+    static boolean stalemate=false;
+    static boolean gameActive=true;
     public Game() throws IOException{
         new GUI();
         whiteKingSquare=GUI.squares[4][0];
@@ -26,8 +34,12 @@ public class Game{
     }
     
     public static void switchTurn(){
+        GUI.lastMove=moves.get(moves.size()-1);
         whiteInCheck=false;
         blackInCheck=false;
+        whiteHasMoves=false;
+        blackHasMoves=false;
+        whiteTurn=!whiteTurn;
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 GUI.squares[i][j].setWatchedWhite(false);
@@ -59,12 +71,63 @@ public class Game{
                     /*The squares that contain kings are updated and tested
                      * to see if each colour is in check
                      */
+                    for(int a=0;a<8;a++){
+                        for(int b=0;b<8;b++){
+                            GUI.squares[i][j].setTemporaryEmpty(true);
+                            GUI.squares[a][b].setTemporaryBlock(true);
+                            if(GUI.squares[i][j].getCurrentPiece().getColour() && whiteTurn){
+                                whiteRemovesCheck=false;
+                                if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="King"){
+                                    if(GUI.squares[a][b].getCurrentPiece()!=null){
+                                        if(!GUI.squares[a][b].squareWatched(false) && GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
+                                            whiteRemovesCheck=true;
+                                        }
+                                    }else if(!GUI.squares[a][b].squareWatched(false)){
+                                        whiteRemovesCheck=true;
+                                    }
+                                }else if(!Game.whiteKingSquare.squareWatched(false)){
+                                    whiteRemovesCheck=true;
+                                }
+                                if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && whiteRemovesCheck){
+                                    whiteHasMoves=true;
+                                }
+                            }else if(!GUI.squares[i][j].getCurrentPiece().getColour() && !whiteTurn){
+                                blackRemovesCheck=false;
+                                if(GUI.squares[a][b].getCurrentPiece()!=null){
+                                        if(!GUI.squares[a][b].squareWatched(false) && GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
+                                            blackRemovesCheck=true;
+                                        }
+                                    }else if(!GUI.squares[a][b].squareWatched(false)){
+                                        blackRemovesCheck=true;
+                                    }
+                                if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && blackRemovesCheck){
+                                    System.out.println("can move "+GUI.squares[i][j].getCurrentPiece()+" to "+GUI.squares[a][b].getX()+" "+GUI.squares[a][b].getY());
+                                    blackHasMoves=true;
+                                }
+                            }
+                            GUI.squares[i][j].setTemporaryEmpty(false);
+                            GUI.squares[a][b].setTemporaryBlock(false);
+                       }
+                    }
                 }
+            }
+        }
+        if(!whiteHasMoves && whiteTurn){
+            if(whiteInCheck){
+                whiteCheckmated=true;
+            }else{
+                stalemate=true;
+            }
+        }
+        if(!blackHasMoves && !whiteTurn){
+            if(blackInCheck){
+                blackCheckmated=true;
+            }else{
+                stalemate=true;
             }
         }
         GUI.switchIcon();
         GUI.updateMoveList();
-        whiteTurn=!whiteTurn;
         //Finally, the turn is switched to the other player
     }
     

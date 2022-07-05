@@ -231,24 +231,30 @@ public class GUI extends JFrame implements ActionListener{
     public static void switchIcon(){
         if(statusLabel.getIcon().equals(wPawn)){
             statusLabel.setIcon(bPawn);
-            if(Game.blackInCheck){
+            if(Game.blackCheckmated){
+                statusLabel.setText("Black loses by checkmate");
+            }else if(Game.blackInCheck){
                 statusLabel.setText("Black is in check");
             }else{
                 statusLabel.setText("Black's turn");
             }
         }else{
             statusLabel.setIcon(wPawn);
-            if(Game.whiteInCheck){
+            if(Game.whiteCheckmated){
+                statusLabel.setText("White loses by checkmate");
+            }else if(Game.whiteInCheck){
                 statusLabel.setText("White is in check");
             }else{
                 statusLabel.setText("White's turn");
             }
         }
+        if(Game.stalemate){
+            statusLabel.setText("Draw by stalemate");
+        }
         //Updates the icon panel with whos turn it is, as well as if they are in check
     }
     
     public static void updateMoveList(){
-        lastMove=Game.moves.get(Game.moves.size()-1);
         lastMoveString="";
         if(lastMove.shortCastle){
             lastMoveString="O-O";
@@ -278,7 +284,9 @@ public class GUI extends JFrame implements ActionListener{
         }
         if(lastMove.getColour()){
             nMoves++;
-            if(Game.blackInCheck){
+            if(Game.blackCheckmated){
+                lastMoveString+="#";
+            }else if(Game.blackInCheck){
                 lastMoveString+="+";
             }
             for(int i=lastMoveString.length();i<10;i++){
@@ -286,7 +294,9 @@ public class GUI extends JFrame implements ActionListener{
             }
             moveList.append(nMoves+". "+lastMoveString);
         }else{
-            if(Game.whiteInCheck){
+            if(Game.whiteCheckmated){
+                lastMoveString+="#";
+            }else if(Game.whiteInCheck){
                 lastMoveString+="+";
             }
             moveList.append(lastMoveString+"\n");

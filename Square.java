@@ -43,7 +43,7 @@ public class Square implements ActionListener{
     }
     
     public void actionPerformed(ActionEvent e){
-        if(Game.selectedSquare!=this){
+        if(Game.selectedSquare!=this && Game.gameActive){
             if(Game.selectedPiece==null){
                 if(this.getCurrentPiece()!=null && this.getCurrentPiece().getColour()==Game.getTurn()){
                     Game.selectedPiece=this.getCurrentPiece();
@@ -56,20 +56,28 @@ public class Square implements ActionListener{
                 this.setTemporaryBlock(true);
                 if(Game.getTurn()){
                     if(Game.selectedPiece.getClass().getSimpleName()=="King"){
-                        if(!this.squareWatched(false)){
+                        if(this.getCurrentPiece()!=null){
+                            if(!this.squareWatched(false) && this.getCurrentPiece().getColour()!=Game.selectedPiece.getColour()){
+                                moveRemovesCheck=true;
+                            }
+                        }else if(!this.squareWatched(false)){
                             moveRemovesCheck=true;
                         }
-                    }else if(!Game.whiteKingSquare.squareWatched(false)){
+                     }else if(!Game.whiteKingSquare.squareWatched(false)){
                         moveRemovesCheck=true;
-                    }
+                    } 
                 }else{
                     if(Game.selectedPiece.getClass().getSimpleName()=="King"){
-                        if(!this.squareWatched(true)){
+                        if(this.getCurrentPiece()!=null){
+                            if(!this.squareWatched(true) && this.getCurrentPiece().getColour()!=Game.selectedPiece.getColour()){
+                                moveRemovesCheck=true;
+                            }
+                        }else if(!this.squareWatched(true)){
                             moveRemovesCheck=true;
                         }
-                    }else if(!Game.blackKingSquare.squareWatched(true)){
+                     }else if(!Game.blackKingSquare.squareWatched(true)){
                         moveRemovesCheck=true;
-                    }
+                    } 
                 }
                 Game.selectedSquare.setTemporaryEmpty(false);
                 this.setTemporaryBlock(false);
