@@ -28,6 +28,11 @@ public class Square implements ActionListener{
     
     private boolean moveRemovesCheck;
     
+    private Integer chosenNumber;
+    private boolean promotionMove;
+    private boolean failedPromotion;
+    String[] options=new String[] {"Queen","Rook","Bishop","Knight"};
+    
     public Square(int x, int y, Piece piece){
         this.currentPiece=piece;
         this.x=x;
@@ -86,15 +91,38 @@ public class Square implements ActionListener{
                  * containing a 'piece', and the start square is temporarily empty.
                  * Each enemy piece is then checked to see if it attacks the king.
                  */
+                promotionMove=false;
+                failedPromotion=false;
+                chosenNumber=null;
+                if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
+                    if((Game.selectedPiece.getColour() && this.getY()==7) || (!Game.selectedPiece.getColour() && this.getY()==0)){
+                        promotionMove=true;
+                        chosenNumber=JOptionPane.showOptionDialog(null,"Please choose a piece to promote to","Promotion",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[0]);
+                        switch(chosenNumber){
+                                case(0):Game.selectedSquare.setCurrentPiece(new Queen(Game.selectedPiece.getColour()));
+                                        break;
+                                case(1):Game.selectedSquare.setCurrentPiece(new Rook(Game.selectedPiece.getColour()));
+                                        break;
+                                case(2):Game.selectedSquare.setCurrentPiece(new Bishop(Game.selectedPiece.getColour()));
+                                        break;
+                                case(3):Game.selectedSquare.setCurrentPiece(new Knight(Game.selectedPiece.getColour()));
+                                        break;
+                                case(-1):failedPromotion=true;
+                                         break;
+                        }
+                    }
+                }
                 if(this.getCurrentPiece()==null){
-                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
+                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
-                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
+                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false));
                             GUI.squares[this.getX()][this.getY()-1].getCurrentPiece().setCaptured(true);
                             GUI.squares[this.getX()][this.getY()-1].setCurrentPiece(null);
                             GUI.squares[this.getX()][this.getY()-1].redrawIcon();
+                        }else if(promotionMove){
+                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this,true));
                         }else{
-                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this));
+                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this,false));
                         }
                         //An en passant move requires a pawn to be taken that is on a different square
                         if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()-2){
@@ -113,7 +141,7 @@ public class Square implements ActionListener{
                         }
                         //Castling king or queenside also moves the rook involved
                         Game.selectedPiece.setMoved(true);
-                        this.currentPiece=Game.selectedPiece;
+                        this.currentPiece=Game.selectedSquare.getCurrentPiece();
                         Game.selectedSquare.setCurrentPiece(null);
                         this.redrawIcon();
                         Game.selectedSquare.redrawIcon();
@@ -128,11 +156,15 @@ public class Square implements ActionListener{
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
-                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck){
-                            Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this));
+                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
+                            if(promotionMove){
+                                Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,true));
+                            }else{
+                                Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false));
+                            }
                             Game.selectedPiece.setMoved(true);
                             this.currentPiece.setCaptured(true);
-                            this.currentPiece=Game.selectedPiece;
+                            this.currentPiece=Game.selectedSquare.getCurrentPiece();
                             Game.selectedSquare.setCurrentPiece(null);
                             this.redrawIcon();
                             Game.selectedSquare.redrawIcon();

@@ -269,6 +269,20 @@ public class GUI extends JFrame implements ActionListener{
             lastMoveString="O-O";
         }else if(lastMove.longCastle){
             lastMoveString="O-O-O";
+        }else if(lastMove.getPromotion()){
+            lastMoveString=convertXNotation.get(lastMove.getEndX());
+            lastMoveString+=convertYNotation.get(lastMove.getEndY());
+            lastMoveString+="=";
+            switch(lastMove.getEnd().getCurrentPiece().getClass().getSimpleName()){
+                case("Queen"): lastMoveString+="Q";
+                               break;
+                case("Bishop"): lastMoveString+="B";
+                                break;
+                case("Knight"): lastMoveString+="N";
+                                break;
+                case("Rook"): lastMoveString+="R";
+                              break;
+            }
         }else{
             switch(lastMove.getPiece().getClass().getSimpleName()){
                 case("King"): lastMoveString="K";

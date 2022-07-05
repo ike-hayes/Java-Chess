@@ -6,18 +6,7 @@
  */
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-public class Game implements ActionListener{
-    static Icon wRook=new ImageIcon("Images\\wR.png");
-    static Icon bRook=new ImageIcon("Images\\bR.png");
-    static Icon wBishop=new ImageIcon("Images\\wB.png");
-    static Icon bBishop=new ImageIcon("Images\\bB.png");
-    static Icon wQueen=new ImageIcon("Images\\wQ.png");
-    static Icon bQueen=new ImageIcon("Images\\bQ.png");
-    static Icon wKnight=new ImageIcon("Images\\wN.png");
-    static Icon bKnight=new ImageIcon("Images\\bN.png");
+public class Game{
     
     static Piece selectedPiece=null;
     static Square selectedSquare=null;
@@ -41,37 +30,14 @@ public class Game implements ActionListener{
     static boolean whiteResigns=false;
     static boolean blackResigns=false;
     
-    static String pieceChosen=null;
-    static JDialog pieceChooserBox=new JDialog();      
-    
-    static JButton queenOption=new JButton();
-    static JButton rookOption=new JButton();
-    static JButton bishopOption=new JButton();
-    static JButton knightOption=new JButton();
     public Game() throws IOException{
         new GUI();
         whiteKingSquare=GUI.squares[4][0];
         blackKingSquare=GUI.squares[4][7];
         //The squares that contain the kings are tracked for check
-        queenOption.addActionListener(this);
-        rookOption.addActionListener(this);
-        bishopOption.addActionListener(this);
-        knightOption.addActionListener(this);
     }
     
     public static void switchTurn(){
-        for(int i=0;i<8;i++){
-            for(int j=0;j<8;j++){
-                if(GUI.squares[i][j].getCurrentPiece()!=null){
-                    if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="Pawn"){
-                        if((j==7 && GUI.squares[i][j].getCurrentPiece().getColour()) || (j==0 && !GUI.squares[i][j].getCurrentPiece().getColour())){
-                            pieceChooserBox.setLayout(new FlowLayout());
-                            createButtons(whiteTurn);
-                        }
-                    }
-                }
-            }
-        }
         GUI.lastMove=moves.get(moves.size()-1);
         whiteInCheck=false;
         blackInCheck=false;
@@ -173,28 +139,4 @@ public class Game implements ActionListener{
         GUI.updateMoveList();
         //Finally, the turn is switched to the other player
     }
-    
-    private static void createButtons(boolean colour){
-        queenOption.setOpaque(false);
-        rookOption.setOpaque(false);
-        bishopOption.setOpaque(false);
-        knightOption.setOpaque(false);
-        if(colour){
-            queenOption.setIcon(wQueen);
-            rookOption.setIcon(wRook);
-            bishopOption.setIcon(wBishop);
-            knightOption.setIcon(wKnight);
-        }else{
-            queenOption.setIcon(bQueen);
-            rookOption.setIcon(bRook);
-            bishopOption.setIcon(bBishop);
-            knightOption.setIcon(bKnight);
-        }
-        pieceChooserBox.add(queenOption);
-        pieceChooserBox.add(rookOption);
-        pieceChooserBox.add(bishopOption);
-        pieceChooserBox.add(knightOption);
-    }
-    
-    public void actionPerformed(ActionEvent e){}
 }

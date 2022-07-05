@@ -12,11 +12,13 @@ public class Move{
     private int startY;
     private int endX;
     private int endY;
+    private Square end;
     boolean doublePawnMove=false;
     boolean shortCastle=false;
     boolean longCastle=false;
+    private boolean promotion=false;
     //Contains all the information about the last move
-    public Move(boolean colour, Piece piece, boolean capture, Square start, Square end){
+    public Move(boolean colour, Piece piece, boolean capture, Square start, Square end, boolean promotion){
         this.colour=colour;
         this.piece=piece;
         this.capture=capture;
@@ -24,6 +26,8 @@ public class Move{
         this.startY=start.getY();
         this.endX=end.getX();
         this.endY=end.getY();
+        this.end=end;
+        this.promotion=promotion;
         if(piece.getClass().getSimpleName().equals("Pawn") && Math.abs(startY-endY)==2){
             doublePawnMove=true;
         }
@@ -64,5 +68,13 @@ public class Move{
     
     public int getEndY(){
         return this.endY;
+    }
+    
+    public Square getEnd(){
+        return this.end;
+    }
+    
+    public boolean getPromotion(){
+        return this.promotion;
     }
 }
