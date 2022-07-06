@@ -332,24 +332,26 @@ public class GUI extends JFrame implements ActionListener{
     }
     
     public void actionPerformed(ActionEvent e){
-        if(e.getSource()==resignButton){
-            if(Game.whiteTurn){
-                Game.whiteResigns=true;
-                statusLabel.setText("White resigns");
-            }else{
-                Game.blackResigns=true;
-                statusLabel.setText("Black resigns");
-            }
-            Game.gameActive=false;
-        }else if(e.getSource()==drawButton){
-            if(!drawButtonClicked){
-                if(!drawOffered){
-                   drawOffered=true; 
+        if(Game.gameActive){
+            if(e.getSource()==resignButton){
+                if(Game.whiteTurn){
+                    Game.whiteResigns=true;
+                    statusLabel.setText("White resigns");
                 }else{
-                    Game.gameActive=false;
-                    statusLabel.setText("Draw by agreement");
+                    Game.blackResigns=true;
+                    statusLabel.setText("Black resigns");
                 }
-                drawButtonClicked=true;
+                Game.gameActive=false;
+            }else if(e.getSource()==drawButton){
+                if(!drawButtonClicked){
+                    if(!drawOffered){
+                       drawOffered=true; 
+                    }else{
+                        Game.gameActive=false;
+                        statusLabel.setText("Draw by agreement");
+                    }
+                    drawButtonClicked=true;
+                }
             }
         }
     }

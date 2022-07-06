@@ -21,6 +21,9 @@ public class Pawn extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
+        if(start.getTemporaryBlock()){
+            return false;
+        }
         xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         if(xDisplacement==0 && end.getCurrentPiece()==null){
@@ -47,12 +50,14 @@ public class Pawn extends Piece{
             return true;
         }
         
-        if(GUI.lastMove.doublePawnMove && GUI.lastMove.getEndY()==start.getY() && GUI.lastMove.getPiece()==GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece()){
-            if(yDisplacement==1 && end.getCurrentPiece()==null && this.getColour() && start.getY()==4){
-                return true;
-            }
-            if(yDisplacement==-1 && end.getCurrentPiece()==null && !this.getColour() && start.getY()==3){
-                return true;
+        if(GUI.lastMove!=null){
+            if(GUI.lastMove.doublePawnMove && GUI.lastMove.getEndY()==start.getY() && GUI.lastMove.getPiece()==GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece()){
+                if(yDisplacement==1 && end.getCurrentPiece()==null && this.getColour() && start.getY()==4){
+                    return true;
+                }
+                if(yDisplacement==-1 && end.getCurrentPiece()==null && !this.getColour() && start.getY()==3){
+                    return true;
+                }
             }
         }
         

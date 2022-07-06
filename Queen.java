@@ -24,6 +24,9 @@ public class Queen extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
+        if(start.getTemporaryBlock()){
+            return false;
+        }
         if(start.getX()==end.getX()){
             xDirection=0;
             steps=Math.abs(end.getY()-start.getY());

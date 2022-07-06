@@ -21,6 +21,9 @@ public class Knight extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
+        if(start.getTemporaryBlock()){
+            return false;
+        }
         xDisplacement=Math.abs(end.getX()-start.getX());
         yDisplacement=Math.abs(end.getY()-start.getY());
         if(xDisplacement==1 && yDisplacement==2){

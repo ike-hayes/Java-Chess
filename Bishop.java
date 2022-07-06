@@ -24,6 +24,9 @@ public class Bishop extends Piece{
        }
     }
     public boolean movePossible(Square start, Square end){
+        if(start.getTemporaryBlock()){
+            return false;
+        }
         xDisplacement=end.getX()-start.getX();
         yDisplacement=end.getY()-start.getY();
         steps=Math.abs(yDisplacement);

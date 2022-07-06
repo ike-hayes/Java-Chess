@@ -97,13 +97,17 @@ public class Game{
                                 }
                             }else if(!GUI.squares[i][j].getCurrentPiece().getColour() && !whiteTurn){
                                 blackRemovesCheck=false;
-                                if(GUI.squares[a][b].getCurrentPiece()!=null){
-                                        if(!GUI.squares[a][b].squareWatched(false) && GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
+                                if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="King"){
+                                    if(GUI.squares[a][b].getCurrentPiece()!=null){
+                                        if(!GUI.squares[a][b].squareWatched(true) && GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
                                             blackRemovesCheck=true;
                                         }
-                                    }else if(!GUI.squares[a][b].squareWatched(false)){
+                                    }else if(!GUI.squares[a][b].squareWatched(true)){
                                         blackRemovesCheck=true;
                                     }
+                                }else if(!Game.blackKingSquare.squareWatched(true)){
+                                    blackRemovesCheck=true;
+                                }
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && blackRemovesCheck){
                                     blackHasMoves=true;
                                 }
