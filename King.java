@@ -36,7 +36,7 @@ public class King extends Piece{
         
         xDisplacement=end.getX()-start.getX();
         yDisplacement=Math.abs(end.getY()-start.getY());
-        steps=xDisplacement+yDisplacement;
+        steps=Math.abs(xDisplacement)+yDisplacement;
         if(Math.abs(xDisplacement)<=1 && yDisplacement<=1 && steps!=0){
             return true;
         }

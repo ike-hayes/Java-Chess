@@ -36,19 +36,34 @@ public class GUI extends JFrame implements ActionListener{
     static boolean drawOffered=false;
     static boolean drawButtonClicked;
     
+    static float whiteWins=0;
+    static float blackWins=0;
+    
+    static JDialog gameOver=new JDialog();
+    static JLabel gameOverLabel=new JLabel();
+    
     public GUI() throws IOException{
         setTitle("Chess");
         this.getContentPane().setPreferredSize(new Dimension(1200,800));
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //Creates the window with title "Chess". Also sets size and makes sure it closes
-
+        
         final BufferedImage boardImage=ImageIO.read(new File("Images\\board.png"));
         //This image is used for the board
         
         Border blackBorder=BorderFactory.createLineBorder(Color.black);
         Font myFont=new Font("Consolas", Font.BOLD, 20);
         //Creates a plain black border and font which many of my components use
+            
+        gameOverLabel.setFont(myFont);
+        gameOverLabel.setSize(new Dimension(500,100));
+        gameOver.add(gameOverLabel, BorderLayout.CENTER);
+        gameOver.setTitle("Game over!");
+        gameOver.setSize(new Dimension(500,100));
+        gameOver.setLocationRelativeTo(this);
+        //Sets up the dialog displayed when the game ends
+        
         JPanel boardPanel=new JPanel(){
             public void paintComponent(Graphics g){
                 super.paintComponent(g);
@@ -236,7 +251,11 @@ public class GUI extends JFrame implements ActionListener{
         if(statusLabel.getIcon().equals(wPawn)){
             statusLabel.setIcon(bPawn);
             if(Game.blackCheckmated){
-                statusLabel.setText("Black is checkmated");
+                statusLabel.setIcon(null);
+                whiteWins+=1;
+                statusLabel.setText(whiteWins+" - "+blackWins);
+                gameOverLabel.setText("White wins by checkmate!");
+                gameOver.setVisible(true);
             }else if(Game.blackInCheck){
                 statusLabel.setText("Black is in check");
             }else{
@@ -245,7 +264,11 @@ public class GUI extends JFrame implements ActionListener{
         }else{
             statusLabel.setIcon(wPawn);
             if(Game.whiteCheckmated){
-                statusLabel.setText("White is checkmated");
+                statusLabel.setIcon(null);
+                blackWins+=1;
+                statusLabel.setText(whiteWins+" - "+blackWins);
+                gameOverLabel.setText("Black wins by checkmate!");
+                gameOver.setVisible(true);
             }else if(Game.whiteInCheck){
                 statusLabel.setText("White is in check");
             }else{
@@ -253,8 +276,14 @@ public class GUI extends JFrame implements ActionListener{
             }
         }
         if(Game.stalemate){
-            statusLabel.setText("Draw by stalemate");
+            statusLabel.setIcon(null);
+            whiteWins+=0.5;
+            blackWins+=0.5;
+            statusLabel.setText(whiteWins+" - "+blackWins);
+            gameOverLabel.setText("Draw by stalemate!");
+            gameOver.setVisible(true);
         }
+        //A win is represented by one point to the winner, and a draw is half a point to both players
         if(drawOffered){
             drawButton.setText("Accept draw?");
         }else{
@@ -336,12 +365,18 @@ public class GUI extends JFrame implements ActionListener{
             if(e.getSource()==resignButton){
                 if(Game.whiteTurn){
                     Game.whiteResigns=true;
-                    statusLabel.setIcon(bPawn);
-                    statusLabel.setText("White resigns");
+                    statusLabel.setIcon(null);
+                    blackWins+=1;
+                    statusLabel.setText(whiteWins+" - "+blackWins);
+                    gameOverLabel.setText("Black wins by resignation!");
+                    gameOver.setVisible(true);
                 }else{
                     Game.blackResigns=true;
-                    statusLabel.setIcon(wPawn);
-                    statusLabel.setText("Black resigns");
+                    statusLabel.setIcon(null);
+                    whiteWins+=1;
+                    statusLabel.setText(whiteWins+" - "+blackWins);
+                    gameOverLabel.setText("White wins by resignation!");
+                    gameOver.setVisible(true);
                 }
                 Game.gameActive=false;
             }else if(e.getSource()==drawButton){
@@ -350,7 +385,12 @@ public class GUI extends JFrame implements ActionListener{
                        drawOffered=true; 
                     }else{
                         Game.gameActive=false;
-                        statusLabel.setText("Draw by agreement");
+                        statusLabel.setIcon(null);
+                        whiteWins+=0.5;
+                        blackWins+=0.5;
+                        statusLabel.setText(whiteWins+" - "+blackWins);
+                        gameOverLabel.setText("Draw by agreement!");
+                        gameOver.setVisible(true);
                     }
                     drawButtonClicked=true;
                 }

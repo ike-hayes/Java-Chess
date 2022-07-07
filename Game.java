@@ -50,11 +50,9 @@ public class Game{
                 GUI.squares[i][j].setWatchedWhite(false);
                 GUI.squares[i][j].setWatchedBlack(false);
                 if(GUI.squares[i][j].squareWatched(true)){
-                    System.out.println("square "+GUI.squares[i][j].getX()+" "+GUI.squares[i][j].getY()+" watched by white");
                     GUI.squares[i][j].setWatchedWhite(true);
                 }
                 if(GUI.squares[i][j].squareWatched(false)){
-                    System.out.println("square "+GUI.squares[i][j].getX()+" "+GUI.squares[i][j].getY()+" watched by black");
                     GUI.squares[i][j].setWatchedBlack(true);
                 }
                 /*Each square is checked for if it is watched by white or black
