@@ -40,12 +40,13 @@ public class GUI extends JFrame implements ActionListener{
     static float blackWins=0;
     
     static JDialog gameOver=new JDialog();
-    static JLabel gameOverLabel=new JLabel();
+    static JLabel gameOverLabel=new JLabel("",SwingConstants.CENTER);
     
     public GUI() throws IOException{
         setTitle("Chess");
-        this.getContentPane().setPreferredSize(new Dimension(1200,800));
+        this.getContentPane().setSize(new Dimension(1200,800));
         this.setResizable(false);
+        this.setLocation(200,20);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         //Creates the window with title "Chess". Also sets size and makes sure it closes
         
@@ -54,11 +55,14 @@ public class GUI extends JFrame implements ActionListener{
         
         Border blackBorder=BorderFactory.createLineBorder(Color.black);
         Font myFont=new Font("Consolas", Font.BOLD, 20);
-        //Creates a plain black border and font which many of my components use
+        /* Creates a plain black border and font which many of my components use. The font is monospaced
+         * meaning all the characters and spaces are the same pixel length, which is important so that 
+         * the move list aligns properly
+         */
             
         gameOverLabel.setFont(myFont);
         gameOverLabel.setSize(new Dimension(500,100));
-        gameOver.add(gameOverLabel, BorderLayout.CENTER);
+        gameOver.add(gameOverLabel, SwingConstants.CENTER);
         gameOver.setTitle("Game over!");
         gameOver.setSize(new Dimension(500,100));
         gameOver.setLocationRelativeTo(this);
@@ -244,7 +248,7 @@ public class GUI extends JFrame implements ActionListener{
         convertYNotation.put(5,"6");
         convertYNotation.put(6,"7");
         convertYNotation.put(7,"8");
-        //HashMaps used to convert from x and y values used interally to proper chess notation
+        //HashMaps used to convert from x and y values used internally to proper chess notation
     }
     
     public static void switchIcon(){
@@ -283,7 +287,9 @@ public class GUI extends JFrame implements ActionListener{
             gameOverLabel.setText("Draw by stalemate!");
             gameOver.setVisible(true);
         }
-        //A win is represented by one point to the winner, and a draw is half a point to both players
+        /*A win is represented by one point to the winner, and a draw is half a point to both players. Text
+         * will also be displayed that signifys the end of the game.
+         */
         if(drawOffered){
             drawButton.setText("Accept draw?");
         }else{
@@ -344,6 +350,7 @@ public class GUI extends JFrame implements ActionListener{
             for(int i=lastMoveString.length();i<10;i++){
                 lastMoveString+=" ";
             }
+            //Spaces are added to the end of white moves to make the length of the string always the same
             moveList.append(nMoves+". "+lastMoveString);
         }else{
             if(Game.whiteCheckmated){
@@ -353,9 +360,8 @@ public class GUI extends JFrame implements ActionListener{
             }
             moveList.append(lastMoveString+"\n");
         }
-        /* The raw information from the program needs to be converted to 
-         * chess notation to go on the move list. Chess notation contains
-         * information about which piece moved, the square it goes to, and 
+        /* The raw information from the program needs to be converted to chess notation to go on the move 
+         * list. Chess notation contains information about which piece moved, the square it goes to, and
          * whether the move is a capture or check. Special notation is used for castling and promotions.
          */
     }
