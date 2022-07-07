@@ -2,7 +2,7 @@
  * The squares on the chess board that will hold pieces
  *
  * @author Ike Hayes
- * @version 21/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +32,7 @@ public class Square implements ActionListener{
     private boolean promotionMove;
     private boolean failedPromotion;
     String[] options=new String[] {"Queen","Rook","Bishop","Knight"};
+    //These are used for promotion
     
     public Square(int x, int y, Piece piece){
         this.currentPiece=piece;
@@ -59,25 +60,17 @@ public class Square implements ActionListener{
                 moveRemovesCheck=false;
                 Game.selectedSquare.setTemporaryEmpty(true);
                 this.setTemporaryBlock(true);
-                if(Game.whiteTurn){
+                if(Game.whiteTurn && Game.selectedPiece.getColour()){
                     if(Game.selectedPiece.getClass().getSimpleName()=="King"){
-                        if(this.getCurrentPiece()!=null){
-                            if(!this.squareWatched(false) && this.getCurrentPiece().getColour()!=Game.selectedPiece.getColour()){
-                                moveRemovesCheck=true;
-                            }
-                        }else if(!this.squareWatched(false)){
+                        if(!this.squareWatched(false)){
                             moveRemovesCheck=true;
                         }
                      }else if(!Game.whiteKingSquare.squareWatched(false)){
                         moveRemovesCheck=true;
                     } 
-                }else{
+                }else if(!Game.whiteTurn && !Game.selectedPiece.getColour()){
                     if(Game.selectedPiece.getClass().getSimpleName()=="King"){
-                        if(this.getCurrentPiece()!=null){
-                            if(!this.squareWatched(true) && this.getCurrentPiece().getColour()!=Game.selectedPiece.getColour()){
-                                moveRemovesCheck=true;
-                            }
-                        }else if(!this.squareWatched(true)){
+                        if(!this.squareWatched(true)){
                             moveRemovesCheck=true;
                         }
                      }else if(!Game.blackKingSquare.squareWatched(true)){
@@ -112,6 +105,10 @@ public class Square implements ActionListener{
                         }
                     }
                 }
+                /* This checks if the move is a pawn promotion. If this is the case, the player is 
+                 * offered a choice of what type of piece they would like to promote to, Queen, Rook,
+                 * Bishop or Knight. If they close the prompt rather than choosing, the move is not allowed.
+                 */
                 if(this.getCurrentPiece()==null){
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
@@ -124,7 +121,9 @@ public class Square implements ActionListener{
                         }else{
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this,false));
                         }
-                        //An en passant move requires a pawn to be taken that is on a different square
+                        /*An en passant move requires a pawn to be taken that is on a different square. En passant 
+                         * and promotion also requires different notation than a regular move.
+                         */
                         if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()-2){
                             GUI.squares[7][this.getY()].getCurrentPiece().setMoved(true);
                             GUI.squares[5][this.getY()].setCurrentPiece(GUI.squares[0][this.getY()].getCurrentPiece());
@@ -204,15 +203,17 @@ public class Square implements ActionListener{
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 if(GUI.squares[i][j].getCurrentPiece()!=null){
-                    if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="Pawn" && GUI.squares[i][j].getCurrentPiece().getColour()==colour){
-                        if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()+1 && !colour){
+                    if(GUI.squares[i][j].getCurrentPiece().getColour()==colour){
+                        if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="Pawn"){
+                            if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()+1 && !colour){
+                                return true;
+                            }
+                            if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()-1 && colour){
+                                return true;
+                            }
+                        }else if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
                             return true;
                         }
-                        if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()-1 && colour){
-                            return true;
-                        }
-                    }else if(GUI.squares[i][j].getCurrentPiece().getColour()==colour && GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
-                        return true;
                     }
                 }
             }

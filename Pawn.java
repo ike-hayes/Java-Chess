@@ -2,7 +2,7 @@
  * The Pawn piece
  *
  * @author Ike Hayes
- * @version 16/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +63,7 @@ public class Pawn extends Piece{
         
         /* The pawn moves in different ways. On its first move, it can move either one or two squares forwards. 
          * After that, it can only move one square. However, it captures diagonally one square left or right. It is
-         * important to distinguish between the black and white pawns because they cannot move backwards. white
+         * important to distinguish between the black and white pawns because they cannot move backwards. White
          * pawns can only move up the board and black pawns only down the board. A pawn can also capture en passant
          * if the last move was was another pawn moving two squares next to it.
          */

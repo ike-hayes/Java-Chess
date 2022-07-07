@@ -2,7 +2,7 @@
  * The Rook piece
  *
  * @author Ike Hayes
- * @version 16/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +29,7 @@ public class Rook extends Piece{
         if(start.getTemporaryBlock()){
             return false;
         }
+        //If the start square has a temporary block, this means it will be taken by another piece
         if(start.getX()==end.getX()){
             xDirection=0;
             steps=Math.abs(end.getY()-start.getY());
@@ -61,7 +62,7 @@ public class Rook extends Piece{
                 return true;
             }
         }
-        //Checks each square in between the rook and its target for if they are blocked by other pieces
+        //Checks each square in between the rook and its target for if they are blocked by other pieces or temporarily
         return false;
     }
 }

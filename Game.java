@@ -2,7 +2,7 @@
  * The main class to run the chess game
  *
  * @author Ike Hayes
- * @version 17/6/22
+ * @version 7/7/22
  */
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class Game{
     static boolean gameActive=true;
     static boolean whiteResigns=false;
     static boolean blackResigns=false;
+    //These variables contain various information about the gamestate
     
     public Game() throws IOException{
         new GUI();
@@ -49,9 +50,11 @@ public class Game{
                 GUI.squares[i][j].setWatchedWhite(false);
                 GUI.squares[i][j].setWatchedBlack(false);
                 if(GUI.squares[i][j].squareWatched(true)){
+                    System.out.println("square "+GUI.squares[i][j].getX()+" "+GUI.squares[i][j].getY()+" watched by white");
                     GUI.squares[i][j].setWatchedWhite(true);
                 }
                 if(GUI.squares[i][j].squareWatched(false)){
+                    System.out.println("square "+GUI.squares[i][j].getX()+" "+GUI.squares[i][j].getY()+" watched by black");
                     GUI.squares[i][j].setWatchedBlack(true);
                 }
                 /*Each square is checked for if it is watched by white or black
@@ -89,9 +92,11 @@ public class Game{
                                     }else if(!GUI.squares[a][b].squareWatched(false)){
                                         whiteRemovesCheck=true;
                                     }
+                                    //If the king is moving, it needs to move out of check
                                 }else if(!Game.whiteKingSquare.squareWatched(false)){
                                     whiteRemovesCheck=true;
                                 }
+                                //Otherwise, whatever piece that moves needs to not leave the king in check
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && whiteRemovesCheck){
                                     whiteHasMoves=true;
                                 }
@@ -116,6 +121,10 @@ public class Game{
                             GUI.squares[a][b].setTemporaryBlock(false);
                        }
                     }
+                    /*Each square is then tested to see if the piece in it has any availible moves.
+                     * if there are no pieces with any moves availible, the game has ended in either checkmate
+                     * or stalemate
+                     */
                 }
             }
         }
@@ -135,12 +144,16 @@ public class Game{
                 stalemate=true;
             }
         }
+        /*If a players turn comes round and they can't make any moves that wouldn't leave
+         * their king in check, this is either a checkmate or stalemate. If their king is in check,
+         * it is a checkmate. Otherwise, this is a stalemate and the game is a draw.
+         */
         if(GUI.drawOffered && !GUI.drawButtonClicked){
             GUI.drawOffered=false;
         }
         GUI.drawButtonClicked=false;
         GUI.switchIcon();
         GUI.updateMoveList();
-        //Finally, the turn is switched to the other player
+        //Finally, the GUI is updated to reflect the current gamestate
     }
 }

@@ -2,7 +2,7 @@
  * The abstract class that all pieces are based on
  *
  * @author Ike Hayes
- * @version 24/5/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;

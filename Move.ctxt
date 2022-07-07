@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Move
-comment0.text=\r\n\ Creates\ the\ moves\ in\ the\ chess\ game\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 21/6/22\r\n
+comment0.text=\r\n\ Creates\ the\ moves\ in\ the\ chess\ game\r\n\r\n\ @author\ Ike\ Hayes\r\n\ @version\ 7/7/22\r\n
 comment1.params=colour\ piece\ capture\ start\ end\ promotion
 comment1.target=Move(boolean,\ Piece,\ boolean,\ Square,\ Square,\ boolean)
 comment10.params=

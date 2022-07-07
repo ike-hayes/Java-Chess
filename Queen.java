@@ -2,7 +2,7 @@
  * The Queen piece
  *
  * @author Ike Hayes
- * @version 16/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;

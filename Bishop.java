@@ -2,7 +2,7 @@
  * The Bishop piece
  *
  * @author Ike Hayes
- * @version 16/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ public class Bishop extends Piece{
                 return true;
             }
         }
-        //Checks each square in between the bishop and its target for if they are blocked by other pieces
+        //Checks each square in between the bishop and its target for if they are blocked by other pieces or temporarily
         return false;
     }
 }

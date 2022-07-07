@@ -2,7 +2,7 @@
  * Creates the moves in the chess game
  *
  * @author Ike Hayes
- * @version 21/6/22
+ * @version 7/7/22
  */
 public class Move{
     private boolean colour;
@@ -38,7 +38,8 @@ public class Move{
             longCastle=true;
         }
         /*These moves are used to convert to notation. Each move contains all
-         * the required information to add to the move list.
+         * the required information to add to the move list, such as the start and end squares,
+         * the type and colour of piece, and special moves such as castling or promotion
          */
     }
     

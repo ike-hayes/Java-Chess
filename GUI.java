@@ -2,7 +2,7 @@
  * The UI which shows the game to the player
  *
  * @author Ike Hayes
- * @version 21/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -260,7 +260,7 @@ public class GUI extends JFrame implements ActionListener{
         }else{
             drawButton.setText("Offer draw?");
         }
-        //Updates the icon panel with whos turn it is, as well as if they are in check
+        //Updates the icon panel with whos turn it is, as well as if they are in check. Also updates the draw button
     }
     
     public static void updateMoveList(){
@@ -327,7 +327,7 @@ public class GUI extends JFrame implements ActionListener{
         /* The raw information from the program needs to be converted to 
          * chess notation to go on the move list. Chess notation contains
          * information about which piece moved, the square it goes to, and 
-         * whether the move is a capture or check.
+         * whether the move is a capture or check. Special notation is used for castling and promotions.
          */
     }
     
@@ -336,9 +336,11 @@ public class GUI extends JFrame implements ActionListener{
             if(e.getSource()==resignButton){
                 if(Game.whiteTurn){
                     Game.whiteResigns=true;
+                    statusLabel.setIcon(bPawn);
                     statusLabel.setText("White resigns");
                 }else{
                     Game.blackResigns=true;
+                    statusLabel.setIcon(wPawn);
                     statusLabel.setText("Black resigns");
                 }
                 Game.gameActive=false;
@@ -354,5 +356,6 @@ public class GUI extends JFrame implements ActionListener{
                 }
             }
         }
+        //The buttons that control resiging and offering a draw to the other player
     }
 }

@@ -2,7 +2,7 @@
  * The King piece
  *
  * @author Ike Hayes
- * @version 16/6/22
+ * @version 7/7/22
  */
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +32,7 @@ public class King extends Piece{
         if(end.getWatchedWhite() && !this.getColour()){
             return false;
         }
+        //The king cannot move into a square watched by an enemy piece
         
         xDisplacement=end.getX()-start.getX();
         yDisplacement=Math.abs(end.getY()-start.getY());
