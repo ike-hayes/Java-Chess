@@ -223,11 +223,11 @@ public class Square implements ActionListener{
     }
     
     public boolean squarePassable(boolean colour){
-        if(this.getCurrentPiece()==null && colour && !squareWatchedWhite){
+        if(this.getCurrentPiece()==null && colour && !this.squareWatchedWhite){
             return true;
         }
         
-        if(this.getCurrentPiece()==null && !colour && !squareWatchedBlack){
+        if(this.getCurrentPiece()==null && !colour && !this.squareWatchedBlack){
             return true;
         }
         return false;

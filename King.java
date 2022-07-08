@@ -45,12 +45,12 @@ public class King extends Piece{
         if(!this.getMoved()){
             if((this.getColour() && !start.getWatchedBlack()) || (!this.getColour() && !start.getWatchedWhite())){
                 if(GUI.squares[0][start.getY()].getCurrentPiece()!=null){
-                    if(xDisplacement==-2 && GUI.squares[0][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[1][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[2][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[3][start.getY()].squarePassable(this.getOpponent())){
+                    if(xDisplacement==-2 && !GUI.squares[0][start.getY()].getCurrentPiece().getMoved() && GUI.squares[1][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[2][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[3][start.getY()].squarePassable(this.getOpponent())){
                         return true;
                     }
                 }
                 if(GUI.squares[7][start.getY()].getCurrentPiece()!=null){
-                    if(xDisplacement==2 && GUI.squares[7][start.getY()].getCurrentPiece().getMoved()==false && GUI.squares[6][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[5][start.getY()].squarePassable(this.getOpponent())){
+                    if(xDisplacement==2 && !GUI.squares[7][start.getY()].getCurrentPiece().getMoved() && GUI.squares[6][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[5][start.getY()].squarePassable(this.getOpponent())){
                         return true;
                     }
                 }
