@@ -79,10 +79,10 @@ public class Square implements ActionListener{
                 }
                 Game.selectedSquare.setTemporaryEmpty(false);
                 this.setTemporaryBlock(false);
-                /* This section checks if the move would leave the players king
-                 * in check. The square the piece is moving too is set to be temporarily
-                 * containing a 'piece', and the start square is temporarily empty.
-                 * Each enemy piece is then checked to see if it attacks the king.
+                /* This section checks if the move would leave the players king in check. The square the piece is 
+                 * moving to is set to be temporarily containing a 'piece', and the start square is temporarily empty.
+                 * Each enemy piece is then checked to see if it attacks the king. If any enemy pieces could take
+                 * the king, this move is not allowed
                  */
                 promotionMove=false;
                 failedPromotion=false;
@@ -120,8 +120,9 @@ public class Square implements ActionListener{
                         }else{
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,false,Game.selectedSquare,this,false));
                         }
-                        /*An en passant move requires a pawn to be taken that is on a different square. En passant 
-                         * and promotion also requires different notation than a regular move.
+                        /*An en passant move requires a pawn to be taken that is next to the current pawn rather than 
+                         * in front. En passant can be played when the enemies last move was moving that pawn two squares.
+                         * En passant and promotion also requires different notation than a regular move.
                          */
                         if(Game.selectedPiece.getClass().getSimpleName()=="King" && Game.selectedSquare.getX()==this.getX()-2){
                             GUI.squares[7][this.getY()].getCurrentPiece().setMoved(true);
@@ -217,7 +218,9 @@ public class Square implements ActionListener{
             }
         }
         return false;
-        //A method to see if any enemy pieces are watching a certain square
+        /*A method to see if any enemy pieces are watching a certain square. Each other square is checked for if 
+         * it contains a piece that is watching this square
+         */
     }
     
     public boolean squarePassable(boolean colour){
@@ -229,7 +232,7 @@ public class Square implements ActionListener{
             return true;
         }
         return false;
-        //Checks if a square is passable for the king when castling
+        //Checks if a square is passable for the king when castling. A passable square must be empty and unwatched
     }
 
     public int getX(){

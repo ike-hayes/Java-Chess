@@ -45,6 +45,7 @@ public class Game{
         whiteHasMoves=false;
         blackHasMoves=false;
         whiteTurn=!whiteTurn;
+        //The properties of each colour are reset and the turn is switched
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
                 GUI.squares[i][j].setWatchedWhite(false);
@@ -73,9 +74,8 @@ public class Game{
                             }
                         }
                     }
-                    /*The squares that contain kings are updated and tested
-                     * to see if each colour is in check
-                     */
+                    // The squares that contain kings are updated and tested to see if each colour is in check
+                     
                     for(int a=0;a<8;a++){
                         for(int b=0;b<8;b++){
                             GUI.squares[i][j].setTemporaryEmpty(true);
@@ -90,11 +90,9 @@ public class Game{
                                     }else if(!GUI.squares[a][b].squareWatched(false)){
                                         whiteRemovesCheck=true;
                                     }
-                                    //If the king is moving, it needs to move out of check
                                 }else if(!Game.whiteKingSquare.squareWatched(false)){
                                     whiteRemovesCheck=true;
                                 }
-                                //Otherwise, whatever piece that moves needs to not leave the king in check
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && whiteRemovesCheck){
                                     whiteHasMoves=true;
                                 }
@@ -117,6 +115,7 @@ public class Game{
                             }
                             GUI.squares[i][j].setTemporaryEmpty(false);
                             GUI.squares[a][b].setTemporaryBlock(false);
+                            //All availible moves are tested for each colour to see if they remove check
                        }
                     }
                     /*Each square is then tested to see if the piece in it has any availible moves.

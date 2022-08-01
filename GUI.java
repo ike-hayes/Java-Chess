@@ -26,6 +26,7 @@ public class GUI extends JFrame implements ActionListener{
     static int nMoves=0;
     static HashMap<Integer,String> convertXNotation=new HashMap<Integer,String>();
     static HashMap<Integer,String> convertYNotation=new HashMap<Integer,String>();
+    //Hashmaps used to convert internal numbers to chess notation
     
     static Square[][] squares=new Square[8][8];
     //Setting up panel and array to store the pieces in
@@ -248,7 +249,9 @@ public class GUI extends JFrame implements ActionListener{
         convertYNotation.put(5,"6");
         convertYNotation.put(6,"7");
         convertYNotation.put(7,"8");
-        //HashMaps used to convert from x and y values used internally to proper chess notation
+        /*HashMaps used to convert from x and y values used internally to proper chess notation.
+         * i.e the square (0,0) interally is called a1 on a chess board.
+         */
     }
     
     public static void switchIcon(){
@@ -279,6 +282,7 @@ public class GUI extends JFrame implements ActionListener{
                 statusLabel.setText("White's turn");
             }
         }
+        //When switching the turn, the icon is changed and text is displayed to reflect game state
         if(Game.stalemate){
             statusLabel.setIcon(null);
             whiteWins+=0.5;
@@ -308,6 +312,7 @@ public class GUI extends JFrame implements ActionListener{
             lastMoveString=convertXNotation.get(lastMove.getEndX());
             lastMoveString+=convertYNotation.get(lastMove.getEndY());
             lastMoveString+="=";
+            //Castling and promotions have unique notation
             switch(lastMove.getEnd().getCurrentPiece().getClass().getSimpleName()){
                 case("Queen"): lastMoveString+="Q";
                                break;
@@ -331,6 +336,7 @@ public class GUI extends JFrame implements ActionListener{
                 case("Rook"): lastMoveString="R";
                               break;
             }
+            //Otherwise, the notation begins with the piece being moved
             if(lastMove.getCapture() && lastMove.getPiece().getClass().getSimpleName().equals("Pawn")){
                 lastMoveString+=convertXNotation.get(lastMove.getStartX());
                 lastMoveString+="x";
@@ -339,6 +345,7 @@ public class GUI extends JFrame implements ActionListener{
             }
             lastMoveString+=convertXNotation.get(lastMove.getEndX());
             lastMoveString+=convertYNotation.get(lastMove.getEndY());
+            //Then, the square it moves to. If the move is a capture, an 'x' is put in the middle
         }
         if(lastMove.getColour()){
             nMoves++;
@@ -347,6 +354,7 @@ public class GUI extends JFrame implements ActionListener{
             }else if(Game.blackInCheck){
                 lastMoveString+="+";
             }
+            //A '+' is added to the end for check, and '#' displays checkmate
             for(int i=lastMoveString.length();i<10;i++){
                 lastMoveString+=" ";
             }
@@ -385,6 +393,7 @@ public class GUI extends JFrame implements ActionListener{
                     gameOver.setVisible(true);
                 }
                 Game.gameActive=false;
+                //Clicking the resign button immediately makes the other player win the game
             }else if(e.getSource()==drawButton){
                 if(!drawButtonClicked){
                     if(!drawOffered){
@@ -399,6 +408,7 @@ public class GUI extends JFrame implements ActionListener{
                         gameOver.setVisible(true);
                     }
                     drawButtonClicked=true;
+                    //Clicking draw gives the other player a chance to accept the draw on their next turn
                 }
             }
         }
