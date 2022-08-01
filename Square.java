@@ -113,7 +113,6 @@ public class Square implements ActionListener{
                     if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false));
-                            GUI.squares[this.getX()][this.getY()-1].getCurrentPiece().setCaptured(true);
                             GUI.squares[this.getX()][this.getY()-1].setCurrentPiece(null);
                             GUI.squares[this.getX()][this.getY()-1].redrawIcon();
                         }else if(promotionMove){
@@ -162,7 +161,6 @@ public class Square implements ActionListener{
                                 Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false));
                             }
                             Game.selectedPiece.setMoved(true);
-                            this.currentPiece.setCaptured(true);
                             this.currentPiece=Game.selectedSquare.getCurrentPiece();
                             Game.selectedSquare.setCurrentPiece(null);
                             this.redrawIcon();

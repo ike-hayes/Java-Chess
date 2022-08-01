@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 public abstract class Piece{
-    private boolean captured=false;
     private boolean white;
     private boolean hasMoved=false;
     private Icon icon;
@@ -31,14 +30,6 @@ public abstract class Piece{
     
     public boolean getOpponent(){
         return !this.white;
-    }
-    
-    public boolean getCaptured(){
-        return this.captured;
-    }
-    
-    public void setCaptured(boolean captured){
-        this.captured=captured;
     }
     
     public boolean getMoved(){
