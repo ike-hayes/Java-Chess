@@ -48,6 +48,7 @@ public class GUI extends JFrame implements ActionListener{
         this.setResizable(false);
         this.setLocation(200,20);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setIconImage(new ImageIcon("Images\\wP.png").getImage());
         //Creates the window with title "Chess". Also sets size and makes sure it closes
         
         final BufferedImage boardImage=ImageIO.read(new File("Images\\board.png"));
@@ -445,6 +446,8 @@ public class GUI extends JFrame implements ActionListener{
         Game.blackResigns=false;
         Game.selectedPiece=null;
         Game.selectedSquare=null;
+        Game.blackCheckmated=false;
+        Game.whiteCheckmated=false;
         newGame=null;
         /* After the game ends, a prompt allows players to reset and play another. This resets all the 
          * pieces, move list etc. The only thing not reset is how much each player has won.
