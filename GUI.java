@@ -440,6 +440,12 @@ public class GUI extends JFrame implements ActionListener{
         drawButton.setText("Offer draw?");
         drawOffered=false;
         drawButtonClicked=false;
+        Game.stalemate=false;
+        Game.whiteResigns=false;
+        Game.blackResigns=false;
+        Game.selectedPiece=null;
+        Game.selectedSquare=null;
+        newGame=null;
         /* After the game ends, a prompt allows players to reset and play another. This resets all the 
          * pieces, move list etc. The only thing not reset is how much each player has won.
          */
