@@ -12,4 +12,6 @@ comment5.params=
 comment5.target=void\ updateMoveList()
 comment6.params=e
 comment6.target=void\ actionPerformed(java.awt.event.ActionEvent)
-numComments=7
+comment7.params=
+comment7.target=void\ reset()
+numComments=8

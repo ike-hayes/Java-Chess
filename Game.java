@@ -161,8 +161,8 @@ public class Game{
             GUI.drawOffered=false;
         }
         GUI.drawButtonClicked=false;
-        GUI.switchIcon();
         GUI.updateMoveList();
+        GUI.switchIcon();
         //Finally, the GUI is updated to reflect the current gamestate
     }
 }

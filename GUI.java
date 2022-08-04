@@ -40,8 +40,7 @@ public class GUI extends JFrame implements ActionListener{
     static float whiteWins=0;
     static float blackWins=0;
     
-    static JDialog gameOver=new JDialog();
-    static JLabel gameOverLabel=new JLabel("",SwingConstants.CENTER);
+    static Integer newGame=null;
     
     public GUI() throws IOException{
         setTitle("Chess");
@@ -60,14 +59,6 @@ public class GUI extends JFrame implements ActionListener{
          * meaning all the characters and spaces are the same pixel length, which is important so that 
          * the move list aligns properly
          */
-            
-        gameOverLabel.setFont(myFont);
-        gameOverLabel.setSize(new Dimension(500,100));
-        gameOver.add(gameOverLabel, SwingConstants.CENTER);
-        gameOver.setTitle("Game over!");
-        gameOver.setSize(new Dimension(500,100));
-        gameOver.setLocationRelativeTo(this);
-        //Sets up the dialog displayed when the game ends
         
         JPanel boardPanel=new JPanel(){
             public void paintComponent(Graphics g){
@@ -261,8 +252,10 @@ public class GUI extends JFrame implements ActionListener{
                 statusLabel.setIcon(null);
                 whiteWins+=1;
                 statusLabel.setText(whiteWins+" - "+blackWins);
-                gameOverLabel.setText("White wins by checkmate!");
-                gameOver.setVisible(true);
+                newGame=JOptionPane.showConfirmDialog(null,"White wins by checkmate. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+                if(newGame==0){
+                    GUI.reset();
+                }
             }else if(Game.blackInCheck){
                 statusLabel.setText("Black is in check");
             }else{
@@ -274,8 +267,10 @@ public class GUI extends JFrame implements ActionListener{
                 statusLabel.setIcon(null);
                 blackWins+=1;
                 statusLabel.setText(whiteWins+" - "+blackWins);
-                gameOverLabel.setText("Black wins by checkmate!");
-                gameOver.setVisible(true);
+                newGame=JOptionPane.showConfirmDialog(null,"Black wins by checkmate. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+                if(newGame==0){
+                    GUI.reset();
+                }
             }else if(Game.whiteInCheck){
                 statusLabel.setText("White is in check");
             }else{
@@ -288,8 +283,10 @@ public class GUI extends JFrame implements ActionListener{
             whiteWins+=0.5;
             blackWins+=0.5;
             statusLabel.setText(whiteWins+" - "+blackWins);
-            gameOverLabel.setText("Draw by stalemate!");
-            gameOver.setVisible(true);
+            newGame=JOptionPane.showConfirmDialog(null,"Draw by stalemate. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+            if(newGame==0){
+                GUI.reset();
+            }
         }
         /*A win is represented by one point to the winner, and a draw is half a point to both players. Text
          * will also be displayed that signifys the end of the game.
@@ -377,22 +374,26 @@ public class GUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(Game.gameActive){
             if(e.getSource()==resignButton){
+                Game.gameActive=false;
                 if(Game.whiteTurn){
                     Game.whiteResigns=true;
                     statusLabel.setIcon(null);
                     blackWins+=1;
                     statusLabel.setText(whiteWins+" - "+blackWins);
-                    gameOverLabel.setText("Black wins by resignation!");
-                    gameOver.setVisible(true);
+                    newGame=JOptionPane.showConfirmDialog(null,"Black wins by resignation. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+                    if(newGame==0){
+                        GUI.reset();
+                    }
                 }else{
                     Game.blackResigns=true;
                     statusLabel.setIcon(null);
                     whiteWins+=1;
                     statusLabel.setText(whiteWins+" - "+blackWins);
-                    gameOverLabel.setText("White wins by resignation!");
-                    gameOver.setVisible(true);
+                    newGame=JOptionPane.showConfirmDialog(null,"White wins by resignation. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+                    if(newGame==0){
+                        GUI.reset();
+                    }
                 }
-                Game.gameActive=false;
                 //Clicking the resign button immediately makes the other player win the game
             }else if(e.getSource()==drawButton){
                 if(!drawButtonClicked){
@@ -404,8 +405,10 @@ public class GUI extends JFrame implements ActionListener{
                         whiteWins+=0.5;
                         blackWins+=0.5;
                         statusLabel.setText(whiteWins+" - "+blackWins);
-                        gameOverLabel.setText("Draw by agreement!");
-                        gameOver.setVisible(true);
+                        newGame=JOptionPane.showConfirmDialog(null,"Draw by agreement. New game?","Game Over!",JOptionPane.YES_NO_OPTION);
+                        if(newGame==0){
+                            GUI.reset();
+                        }
                     }
                     drawButtonClicked=true;
                     //Clicking draw gives the other player a chance to accept the draw on their next turn
@@ -413,5 +416,32 @@ public class GUI extends JFrame implements ActionListener{
             }
         }
         //The buttons that control resiging and offering a draw to the other player
+    }
+    
+    public static void reset(){
+        Game.moves.clear();
+        moveList.setText("");
+        piecePanel.removeAll();
+        piecePanel.revalidate();
+        piecePanel.repaint();
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                GUI.squares[i][j]=null;
+            }
+        }
+        standardGameSetup();
+        Game.gameActive=true;
+        Game.whiteTurn=true;
+        Game.whiteKingSquare=GUI.squares[4][0];
+        Game.blackKingSquare=GUI.squares[4][7];
+        statusLabel.setIcon(wPawn);
+        statusLabel.setText("White's turn");
+        nMoves=0;
+        drawButton.setText("Offer draw?");
+        drawOffered=false;
+        drawButtonClicked=false;
+        /* After the game ends, a prompt allows players to reset and play another. This resets all the 
+         * pieces, move list etc. The only thing not reset is how much each player has won.
+         */
     }
 }
