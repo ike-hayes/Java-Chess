@@ -94,7 +94,13 @@ public class Game{
                                     whiteRemovesCheck=true;
                                 }
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && whiteRemovesCheck){
-                                    whiteHasMoves=true;
+                                    if(GUI.squares[a][b].getCurrentPiece()!=null){
+                                        if(GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
+                                            whiteHasMoves=true;
+                                        }
+                                    }else{
+                                        whiteHasMoves=true;
+                                    }
                                 }
                             }else if(!GUI.squares[i][j].getCurrentPiece().getColour() && !whiteTurn){
                                 blackRemovesCheck=false;
@@ -110,7 +116,13 @@ public class Game{
                                     blackRemovesCheck=true;
                                 }
                                 if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],GUI.squares[a][b]) && blackRemovesCheck){
-                                    blackHasMoves=true;
+                                    if(GUI.squares[a][b].getCurrentPiece()!=null){
+                                        if(GUI.squares[a][b].getCurrentPiece().getColour()!=GUI.squares[i][j].getCurrentPiece().getColour()){
+                                            blackHasMoves=true;
+                                        }
+                                    }else{
+                                        blackHasMoves=true;
+                                    }
                                 }
                             }
                             GUI.squares[i][j].setTemporaryEmpty(false);
