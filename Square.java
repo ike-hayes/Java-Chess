@@ -27,6 +27,7 @@ public class Square implements ActionListener{
     private boolean temporaryEmpty=false;
     
     private boolean moveRemovesCheck;
+    private boolean kingMovingIntoCheck=false;
     
     private Integer chosenNumber;
     private boolean promotionMove;
@@ -57,6 +58,17 @@ public class Square implements ActionListener{
                     //If there is no piece selected and this square contains one, it is selected
                 }
             }else{
+                kingMovingIntoCheck=false;
+                if(Game.selectedPiece.getClass().getSimpleName()=="King"){
+                    if(Game.selectedPiece.getColour()){
+                        if(this.getWatchedBlack()){
+                            kingMovingIntoCheck=true;
+                        }
+                    }else if(this.getWatchedWhite()){
+                        kingMovingIntoCheck=true;
+                    }
+                }
+                //Disallows any move that would leave the king in check
                 moveRemovesCheck=false;
                 Game.selectedSquare.setTemporaryEmpty(true);
                 this.setTemporaryBlock(true);
@@ -110,7 +122,7 @@ public class Square implements ActionListener{
                  * Bishop or Knight. If they close the prompt rather than choosing, the move is not allowed.
                  */
                 if(this.getCurrentPiece()==null){
-                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
+                    if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion && !kingMovingIntoCheck){
                         if(Game.selectedPiece.getClass().getSimpleName()=="Pawn" && (Game.selectedSquare.getX()==this.getX()+1 || Game.selectedSquare.getX()==this.getX()-1)){
                             Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,false));
                             GUI.squares[this.getX()][this.getY()-1].setCurrentPiece(null);
@@ -155,7 +167,7 @@ public class Square implements ActionListener{
                         Game.selectedSquare=this;
                         //If a piece of the same colour is clicked on, this new piece is selected
                     }else{
-                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion){
+                        if(Game.selectedPiece.movePossible(Game.selectedSquare,this) && moveRemovesCheck && !failedPromotion && !kingMovingIntoCheck){
                             if(promotionMove){
                                 Game.moves.add(new Move(Game.selectedPiece.getColour(),Game.selectedPiece,true,Game.selectedSquare,this,true));
                             }else{
@@ -201,7 +213,7 @@ public class Square implements ActionListener{
     public boolean squareWatched(boolean colour){
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
-                if(GUI.squares[i][j].getCurrentPiece()!=null){
+                if(GUI.squares[i][j].getCurrentPiece()!=null && !GUI.squares[i][j].getTemporaryBlock()){
                     if(GUI.squares[i][j].getCurrentPiece().getColour()==colour){
                         if(GUI.squares[i][j].getCurrentPiece().getClass().getSimpleName()=="Pawn"){
                             if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()+1 && !colour){

@@ -25,14 +25,6 @@ public class King extends Piece{
         if(start.getTemporaryBlock()){
             return false;
         }
-        if(end.getWatchedBlack() && this.getColour()){
-            return false;
-        }
-        
-        if(end.getWatchedWhite() && !this.getColour()){
-            return false;
-        }
-        //The king cannot move into a square watched by an enemy piece
         
         xDisplacement=end.getX()-start.getX();
         yDisplacement=Math.abs(end.getY()-start.getY());
