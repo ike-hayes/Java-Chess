@@ -127,7 +127,11 @@ public class Game{
                             }
                             GUI.squares[i][j].setTemporaryEmpty(false);
                             GUI.squares[a][b].setTemporaryBlock(false);
-                            //All availible moves are tested for each colour to see if they remove check
+                            /*All availible moves are tested for each colour to see if they remove check.
+                             * This consists of a double for loop inside another double for loop. Each square
+                             * that has a piece is tested to see if the piece is able to move to each other square.
+                             * This move must also not leave their king in check to be considered legal.
+                             */
                        }
                     }
                     /*Each square is then tested to see if the piece in it has any availible moves.

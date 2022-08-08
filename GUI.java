@@ -39,6 +39,7 @@ public class GUI extends JFrame implements ActionListener{
     
     static float whiteWins=0;
     static float blackWins=0;
+    //Tracks the wins of each player in a session
     
     static Integer newGame=null;
     
@@ -257,6 +258,7 @@ public class GUI extends JFrame implements ActionListener{
                 if(newGame==0){
                     GUI.reset();
                 }
+                //When a player wins, a messages displays the result and gives the players a chance to reset and play again
             }else if(Game.blackInCheck){
                 statusLabel.setText("Black is in check");
             }else{
@@ -450,7 +452,7 @@ public class GUI extends JFrame implements ActionListener{
         Game.whiteCheckmated=false;
         newGame=null;
         /* After the game ends, a prompt allows players to reset and play another. This resets all the 
-         * pieces, move list etc. The only thing not reset is how much each player has won.
+         * pieces, move list etc. The only thing not reset is how many wins each player has.
          */
     }
 }

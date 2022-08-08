@@ -42,6 +42,7 @@ public class Pawn extends Piece{
                 }
             }
         }
+        //Basic movement, pawns move one step forwards or can move two on their first move
         
         if(yDisplacement==1 && Math.abs(xDisplacement)==1 && end.getCurrentPiece()!=null && this.getColour()){
             return true;
@@ -49,6 +50,7 @@ public class Pawn extends Piece{
         if(yDisplacement==-1 && Math.abs(xDisplacement)==1 && end.getCurrentPiece()!=null && !this.getColour()){
             return true;
         }
+        //The pawn captures one square diagonally forwards
         
         if(GUI.lastMove!=null){
             if(GUI.lastMove.doublePawnMove && GUI.lastMove.getEndY()==start.getY() && GUI.lastMove.getPiece()==GUI.squares[start.getX()+xDisplacement][start.getY()].getCurrentPiece()){
@@ -60,6 +62,7 @@ public class Pawn extends Piece{
                 }
             }
         }
+        //En passant
         
         /* The pawn moves in different ways. On its first move, it can move either one or two squares forwards. 
          * After that, it can only move one square. However, it captures diagonally one square left or right. It is

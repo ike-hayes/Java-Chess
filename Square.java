@@ -68,7 +68,7 @@ public class Square implements ActionListener{
                         kingMovingIntoCheck=true;
                     }
                 }
-                //Disallows any move that would leave the king in check
+                //Disallows the king from moving itself into check
                 moveRemovesCheck=false;
                 Game.selectedSquare.setTemporaryEmpty(true);
                 this.setTemporaryBlock(true);
@@ -222,6 +222,7 @@ public class Square implements ActionListener{
                             if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()-1 && colour){
                                 return true;
                             }
+                            //Since pawns capture differently than they move, they need to be checked if they are watching a square
                         }else if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){   
                             return true;
                         }

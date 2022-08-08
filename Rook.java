@@ -45,7 +45,7 @@ public class Rook extends Piece{
             }
             xDirection=(end.getX()-start.getX())/steps;
         }
-        /*Maths to find how the piece is moving. The number of squares it moves is counted as well as the direction
+        /*Maths to find how the piece is moving. The number of squares it moves is counted, as well as the direction
          * which can be either 1,-1 or 0 in each direction. A rook can only ever move along the x or y axis, not both
          */
         if(start.getX()==end.getX() || start.getY()==end.getY()){
