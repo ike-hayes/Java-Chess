@@ -222,7 +222,7 @@ public class Square implements ActionListener{
                             if((GUI.squares[i][j].getX()==this.getX()+1 || GUI.squares[i][j].getX()==this.getX()-1) && GUI.squares[i][j].getY()==this.getY()-1 && colour){
                                 return true;
                             }
-                        }else if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){
+                        }else if(GUI.squares[i][j].getCurrentPiece().movePossible(GUI.squares[i][j],this)){   
                             return true;
                         }
                     }

@@ -34,7 +34,7 @@ public class King extends Piece{
         }
         //King can only move one square in any direction
         
-        if(!this.getMoved()){
+        if(!this.getMoved() && start.getY()==end.getY()){
             if((this.getColour() && !start.getWatchedBlack()) || (!this.getColour() && !start.getWatchedWhite())){
                 if(GUI.squares[0][start.getY()].getCurrentPiece()!=null){
                     if(xDisplacement==-2 && !GUI.squares[0][start.getY()].getCurrentPiece().getMoved() && GUI.squares[1][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[2][start.getY()].squarePassable(this.getOpponent()) && GUI.squares[3][start.getY()].squarePassable(this.getOpponent())){
