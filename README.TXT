@@ -4,3 +4,6 @@ AUTHORS: Ike Hayes
 USER INSTRUCTIONS: Start a new instance of the game class
 This project contains images from Wikimedia commons. Attribution and license information
 is in the file 'Attribution.txt' along with the images.
+
+RULES OF CHESS:
+https://www.sakkpalota.hu/index.php/en/chess/rules
