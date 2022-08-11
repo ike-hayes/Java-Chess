@@ -74,7 +74,7 @@ public class GUI extends JFrame implements ActionListener{
         piecePanel.setLayout(new GridLayout(8,8));
         piecePanel.setOpaque(false);
         piecePanel.setBounds(0,0,800,800);
-        standardGameSetup();
+        reset();
         /* This panel holds all the pieces in a 8x8 layout
          * Once the panel is created it is populated with pieces in
          * the standard game set up.
